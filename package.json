@@ -1,0 +1,34 @@
+{
+  "name": "ecommerce-project",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "knex": "knex"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-pg-simple": "^7.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "knex": "^2.0.0",
+    "passport": "^0.5.3",
+    "passport-local": "^1.0.0",
+    "pg": "^8.7.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.31.2",
+    "react-router-dom": "^6.3.0",
+    "sass": "^1.51.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "vite": "^2.9.9"
+  }
+}
