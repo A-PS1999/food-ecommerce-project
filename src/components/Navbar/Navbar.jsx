@@ -6,7 +6,7 @@ export default function Navbar() {
     return (
         <nav>
             <Link to="/" className="navbar__link">
-                WorldFoods
+                <img src="/logo.svg" alt="WorldFoods" />
             </Link>
             <input type="checkbox" id="navbar-toggle-burg" />
             <div className="navbar__hamburger">

@@ -1,0 +1,79 @@
+@use './../../sass/abstracts/variables' as var;
+
+footer {
+    display: grid;
+    grid-template-areas:"left . right far-right"
+                         "left . right far-right";
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 30% 1fr 25% 15%;
+    background-color: var.$head-foot-colour;
+    padding: 1.5rem;
+}
+
+.to-top-button {
+    width: 100%;
+    padding: 1rem;
+    appearance: none;
+    border: none;
+    font-size: 1.3rem;
+    color: var.$colour-white;
+    background-color: var.$light-orange;
+    transition: all .1s;
+
+    &:hover {
+        background-color: var.$dark-orange;
+        cursor: pointer;
+    }
+}
+
+.footer-logo-link {
+    background-color: var.$colour-white;
+    padding: 1rem;
+    border-radius: 2rem;
+    grid-area: left;
+    margin-left: 2.5rem;
+    max-width: 50%;
+    max-height: 75%;
+    align-self: center;
+}
+
+.footer-link-container {
+    grid-area: right;
+    display: flex;
+    flex-direction: column;
+    justify-self: end;
+    align-items: center;
+
+    &__link {
+        font-size: 1.4rem;
+        padding: 0.5rem;
+        background-color: transparent;
+        text-decoration: none;
+        color: var.$primary-green;
+        border: 1px solid var.$primary-green;
+        border-radius: 1rem;
+        transition: all .1s;
+
+        &--first {
+            @extend .footer-link-container__link;
+            margin-bottom: 0.5rem;
+        }
+
+        &:hover {
+            background-color: var.$primary-green;
+            color: var.$colour-white;
+        }
+    }
+
+    &__heading {
+        font-size: 1.7rem;
+        color: var.$primary-green;
+        margin-bottom: 0.5rem;
+    }
+
+    &--rightmost {
+        @extend .footer-link-container;
+        grid-area: far-right;
+        justify-self: center;
+    }
+}

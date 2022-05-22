@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage/HomePage';
 import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import CartPage from './components/CartPage/CartPage';
@@ -11,7 +12,6 @@ import './App.scss';
 function App() {
 
   return (
-    <Router>
       <main>
         <Navbar />
         <Routes>
@@ -21,8 +21,8 @@ function App() {
           <Route path="/cart" element={CartPage()} />
           <Route path="*" element={NotFound()} />
         </Routes>
+        <Footer />
       </main>
-    </Router>
   )
 }
 
