@@ -1,18 +1,26 @@
 @use './../../sass/abstracts/variables' as var;
 
 footer {
-    display: grid;
-    grid-template-areas:"left . right far-right"
-                         "left . right far-right";
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 30% 1fr 25% 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     background-color: var.$head-foot-colour;
     padding: 1.5rem;
+
+    @media only screen and (min-width: 769px) {
+        display: grid;
+        grid-template-areas:"left . right far-right"
+                         "left . right far-right";
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 30% 1fr 25% 15%;
+        background-color: var.$head-foot-colour;
+        padding: 1.5rem;
+    }
 }
 
 .to-top-button {
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
     appearance: none;
     border: none;
     font-size: 1.3rem;
@@ -30,22 +38,37 @@ footer {
     background-color: var.$colour-white;
     padding: 1rem;
     border-radius: 2rem;
-    grid-area: left;
-    margin-left: 2.5rem;
-    max-width: 50%;
-    max-height: 75%;
     align-self: center;
+    width: 45%;
+
+    @media only screen and (min-width: 769px) {
+        background-color: var.$colour-white;
+        padding: 1rem;
+        border-radius: 2rem;
+        grid-area: left;
+        margin-left: 2.5rem;
+        max-width: 50%;
+        max-height: 75%;
+        align-self: center;
+    }
 }
 
 .footer-link-container {
-    grid-area: right;
     display: flex;
     flex-direction: column;
     justify-self: end;
     align-items: center;
 
+    @media only screen and (min-width: 769px) {
+        grid-area: right;
+        display: flex;
+        flex-direction: column;
+        justify-self: end;
+        align-items: center;
+    }
+
     &__link {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         padding: 0.5rem;
         background-color: transparent;
         text-decoration: none;
@@ -66,14 +89,18 @@ footer {
     }
 
     &__heading {
-        font-size: 1.7rem;
+        font-size: 1.4rem;
         color: var.$primary-green;
         margin-bottom: 0.5rem;
     }
 
     &--rightmost {
         @extend .footer-link-container;
-        grid-area: far-right;
         justify-self: center;
+
+        @media only screen and (min-width: 769px) {
+            grid-area: far-right;
+            justify-self: center;
+        }
     }
 }

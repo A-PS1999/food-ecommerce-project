@@ -30,21 +30,22 @@ export default function Register() {
 
     return (
         <>
-            <header>
-                <Link to="/">
+            <header className="register-header">
+                <Link to="/" className="register-header__link">
                     <img src="/logo.svg" alt="WorldFoods" />
                 </Link>
             </header>
-            <div>
-                <form onSubmit={handleSubmit(submitData)}>
-                    <input {...register("name", { required: true })} placeholder="Name" />
-                    <input {...register("email", { required: true })} placeholder="Email" />
+            <div className="form-container">
+                <form onSubmit={handleSubmit(submitData)} className="register-form">
+                    <input {...register("name", { required: true })} placeholder="Name" className="register-form__input" />
+                    <input {...register("email", { required: true })} placeholder="Email" className="register-form__input" />
                     <input {...register("password", {
                         required: true,
                         minLength: 6
                         })} 
                         placeholder="Password" 
                         type="password"
+                        className="register-form__input"
                     />
                     <input {...register("confirmPassword", {
                         required: true,
@@ -52,8 +53,9 @@ export default function Register() {
                         })}
                         placeholder="Confirm Password"
                         type="password"
+                        className="register-form__input"
                     />
-                    <button type="submit">Register</button>
+                    <button type="submit" className="register-form__button">Register</button>
                 </form>
             </div>
         </>
