@@ -1,0 +1,217 @@
+@use '../../sass/abstracts/variables' as var;
+
+.navbar {
+    background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    &__link {
+        width: 45%;
+        border-radius: 2rem;
+        background-color: var.$colour-white;
+        padding: 1rem;
+        margin: 1rem;
+
+        @media only screen and (min-width: 769px) {
+            width: 15%;
+        }
+    }
+
+    &__toggle {
+        display: none;
+
+        &:checked ~ .navbar__mobile-menu {
+            transform: translateX(0%);
+        }
+    }
+
+    &__mobile-menu {
+        background: linear-gradient(0deg, rgba(var.$dark-orange, 1) 0%, rgba(var.$light-orange, 1) 42%);
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 40%;
+        transition: transform .3s ease;
+        transform: translateX(100%);
+        display: grid;
+        grid-template-columns:  1fr 1fr 1fr 1fr;
+        grid-template-rows: 10% 10% 10% 1fr;
+        grid-template-areas: ". . close close"
+                             "btn btn btn btn"
+                             ". cart cart .";
+
+        &__toggle {
+            display: none;
+        }
+
+        &__close {
+            color: var.$colour-white;
+            font-size: 3rem;
+            text-align: center;
+            grid-area: close;
+            margin-top: 1rem;
+            margin-left: 1rem;
+        }
+
+        &__button-group {
+            margin-top: 0.5rem;
+            display: flex;
+            grid-area: btn;
+            justify-content: space-evenly;
+            align-items: center;
+
+            &__button {
+                text-decoration: none;
+                border-radius: 1rem;
+                padding: 1rem;
+                background-color: var.$colour-white;
+                box-shadow: 0px 3px 7px 2px rgba(var.$colour-black, 0.42);
+            }
+        }
+
+        &__cart-container {
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            grid-area: cart;
+
+            &__basket {
+                width: 40%;
+                filter: grayscale(1) invert(1);
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            display: none;
+        }
+    }
+
+    &__dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 8.5rem;
+        right: 6rem;
+        transition-delay: .3s;
+        min-width: 15%;
+
+        @media only screen and (min-width: 769px) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            visibility: hidden;
+            background-color: var.$colour-white;
+            border: 1px solid var.$dark-grey;
+            padding: 2rem;
+            text-align: center;
+
+            &:hover {
+                visibility: visible;
+            }
+
+            &__main-link {
+                text-decoration: none;
+                color: var.$colour-white;
+                font-size: 1.3rem;
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+                border-radius: 0.5rem;
+                background: radial-gradient(circle, rgba(var.$primary-green, 1) 0%, rgba(var.$secondary-green, 1) 80%);
+                box-shadow: 0px 3px 7px 2px rgba(var.$colour-black, 0.20);
+
+                &:hover,
+                &:focus {
+                    background: radial-gradient(circle, rgba(var.$primary-green, 1) 0%, rgba(var.$secondary-green, 1) 70%);
+                }
+            }
+        }
+    }
+
+    &__link-group {
+        display: none;
+
+        @media only screen and (min-width: 769px) {
+            margin-right: 2.5rem;
+            display: flex;
+            align-items: center;
+
+            &__acc-link {
+                text-decoration: none;
+                text-align: center;
+                color: var.$colour-white;
+                font-size: 1.4rem;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                transition: all .5s ease;
+                margin-right: 2rem;
+
+                &:hover,
+                &:focus {
+                    border: 1px solid var.$colour-white;
+                }
+
+                &:hover ~ .navbar__dropdown-menu {
+                    visibility: visible;
+                }
+            }
+
+            &__cart-container {
+                padding: 1rem;
+                border-radius: 0.5rem;
+
+                &:hover,
+                &:focus {
+                    border: 1px solid var.$colour-white;
+                }
+                
+                &__basket {
+                    width: 3rem;
+                    filter: grayscale(1) invert(1);
+                }
+            }
+        }
+    }
+
+    &__hamburger-container {
+        display: flex;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 18px;
+        width: 3rem;
+        margin-right: 2rem;
+
+        @media only screen and (min-width: 769px) {
+            display: none;
+        }
+
+        &__hamburger,
+        &__hamburger::before,
+        &__hamburger::after {
+            display: block;
+            position: absolute;
+            background-color: var.$colour-white;
+            height: 4px;
+            border-radius: 2px;
+            width: 3rem;
+        }
+
+        &__hamburger::before {
+            content: '';
+            margin-top: -8px;
+        }
+
+        &__hamburger::after {
+            content: '';
+            margin-top: 8px;
+        }
+    }
+
+    @media only screen and (min-width: 769px) {
+        padding: 0.5rem;
+    }
+}

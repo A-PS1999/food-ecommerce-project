@@ -2,7 +2,6 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 const { UserQ } = require('./db/query-api');
-const { authenticate } = require('passport/lib');
 
 const checkPassword = function(user, password) {
     bcrypt.compare(password, user.password).then(isEqual => {

@@ -9,9 +9,17 @@
 
 body {
     box-sizing: border-box;
+	min-height: 100vh;
+}
+
+#root {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 html {
+	height: 100vh;
 	font-size: 62.5%;
 }
 

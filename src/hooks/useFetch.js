@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 
 const initialState = {
     status: 'idle',
@@ -6,7 +6,15 @@ const initialState = {
     error: null,
 }
 
-export default function useFetch(url, options) {
+const presetOptions = {
+    mode: 'cors',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}
+
+export default function useFetch() {
 
     const [fetchState, dispatch] = useReducer((state, action) => {
         switch (action.type) {
@@ -21,35 +29,24 @@ export default function useFetch(url, options) {
         }
     }, initialState)
 
-    useEffect(() => {
-        let cancelFetch = false;
-        if (!url || !url.trim()) return;
+    const callFetch = async (url, options) => {
+        const fetchOptions = {...presetOptions, ...options};
 
-        const handleFetch = async () => {
-            dispatch({ type: "FETCHING" });
+        dispatch({ type: "FETCHING" });
 
-            try {
-                const response = await fetch(url, options);
+        try {
+            const response = await fetch(url, fetchOptions);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                if (cancelFetch) return;
-                dispatch({ type: "SUCCESS", payload: data });
-            } catch (error) {
-                if (cancelFetch) return;
-                dispatch({ type: "ERROR", payload: error.message });
+            if (!response.ok) {
+                dispatch({ type: "ERROR", payload: `Error: ${response.status}` });
             }
+
+            const data = await response.json();
+            dispatch({ type: "SUCCESS", payload: data })
+        } catch (error) {
+            dispatch({ type: "ERROR", payload: error.message });
         }
+    }
 
-        handleFetch();
-
-        return () => {
-            cancelFetch = true;
-        }
-    }, [url, options])
-
-    return { fetchState };
+    return { callFetch, fetchState };
 }

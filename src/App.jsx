@@ -12,7 +12,7 @@ import './App.scss';
 function App() {
 
   return (
-      <main>
+      <>
         <Navbar />
         <Routes>
           <Route exact path="/" index element={HomePage()} />
@@ -22,7 +22,7 @@ function App() {
           <Route path="*" element={NotFound()} />
         </Routes>
         <Footer />
-      </main>
+      </>
   )
 }
 

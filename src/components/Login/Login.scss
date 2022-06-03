@@ -1,0 +1,106 @@
+@use './../../sass/abstracts/variables' as var;
+
+.login-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    &__link {
+        width: 30%;
+
+        @media only screen and (min-width: 769px) {
+            width: 15%;
+        }
+    }
+}
+
+.login-form {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid var.$dark-grey;
+    row-gap: 1rem;
+
+    @media only screen and (min-width: 769px) {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        border: 1px solid var.$dark-grey;
+        row-gap: 1.8rem;
+    }
+
+    &__input {
+        display: block;
+        border: none;
+        border-radius: 2rem;
+        background-color: var.$light-grey;
+        padding: 0.3rem;
+        padding-left: 1rem;
+        transition: all .2s;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 2rem;
+            padding: 0.5rem;
+            padding-left: 1rem;
+            width: 75%;
+            margin: auto;
+        }
+
+        &:focus, 
+        &:active {
+            outline: none;
+            box-shadow: 0px 0px 7px 3px var.$secondary-green;
+        }
+    }
+
+    &__button {
+        border: none;
+        padding: 0.5rem;
+        border-radius: 2rem;
+        color: var.$colour-white;
+        background: linear-gradient(90deg, rgba(var.$primary-green,1) 0%, rgba(var.$secondary-green,1) 49%, rgba(var.$tertiary-green,1) 100%);
+        transition: all .2s;
+        box-shadow: 0px 3px 7px 2px rgba(var.$colour-black, 0.42);
+
+        @media only screen and (min-width: 769px) {
+            margin: auto;
+            width: 30%;
+        }
+
+        &:hover {
+            background: linear-gradient(40deg, rgba(var.$primary-green,1) 0%, rgba(var.$secondary-green,1) 22%, rgba(var.$tertiary-green,1) 95%);
+            transform: translateY(-2px);
+            box-shadow: 0px 3px 7px 4px rgba(var.$colour-black, 0.42);
+        }
+
+        &:active,
+        &:focus {
+            transform: translateY(-1px);
+        }
+    }
+}
+
+.register-note {
+    font-size: 1.3rem;
+    align-self: center;
+
+    &__link {
+        transition: all .3s ease-in;
+        display: inline-block;
+
+        &:hover,
+        &:focus {
+            transform: translateY(-0.2rem);
+        }
+
+        &:active {
+            transform: translateY(0rem);
+        }
+    }
+}

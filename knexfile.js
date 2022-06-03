@@ -1,14 +1,15 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+require('dotenv').config({ path: path.join(__dirname, '.env.development') });
 
 const dbMode = 
-   process.env.NODE_ENV === 'development' ? {
-    client: "pg",
+   process.env.VITE_ENV === 'development' ? {
+    client: 'pg',
     connection: {
-      host: '127.0.0.1',
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
+      host: 'localhost',
+      port: 5432,
+      user: process.env.VITE_DB_USER,
+      password: process.env.VITE_DB_PASS,
+      database: process.env.VITE_DB_NAME,
       charset: 'utf8'
     },
     migrations: {
@@ -17,9 +18,9 @@ const dbMode =
     },
     seeds: {
       directory: './server/db/seeds'
-    },
+    }
   } : {
-    client: "pg",
+    client: 'pg',
     connection: process.env.DATABASE_URL,
     ssl: { require: true }
 }

@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
 const BCRYPT_COST = 12;
 
-const addUser = db => (name, password_hash, email) => {
-    return db("users").insert({
+const addUser = db => async (name, password_hash, email) => {
+    const newUser = await db("users").returning(['id', 'name', 'password_hash', 'email', 'is_admin']).insert({
         name: name,
-        password_hash: bcrypt.hash(password_hash, BCRYPT_COST),
+        password_hash: await bcrypt.hash(password_hash, BCRYPT_COST),
         email: email,
         is_admin: false
     });
+    return newUser[0];
 }
 
 const findUserBy = db => (field, value) => {

@@ -1,10 +1,14 @@
 @use './../../sass/abstracts/variables' as var;
 
+.outer-footer {
+    margin-top: auto;
+}
+
 footer {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    background-color: var.$head-foot-colour;
+    justify-content: center;
+    background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
     padding: 1.5rem;
 
     @media only screen and (min-width: 769px) {
@@ -39,7 +43,7 @@ footer {
     padding: 1rem;
     border-radius: 2rem;
     align-self: center;
-    width: 45%;
+    width: 25%;
 
     @media only screen and (min-width: 769px) {
         background-color: var.$colour-white;
@@ -47,6 +51,7 @@ footer {
         border-radius: 2rem;
         grid-area: left;
         margin-left: 2.5rem;
+        width: 45%;
         max-width: 50%;
         max-height: 75%;
         align-self: center;
@@ -54,10 +59,7 @@ footer {
 }
 
 .footer-link-container {
-    display: flex;
-    flex-direction: column;
-    justify-self: end;
-    align-items: center;
+    display: none;
 
     @media only screen and (min-width: 769px) {
         grid-area: right;
@@ -72,8 +74,8 @@ footer {
         padding: 0.5rem;
         background-color: transparent;
         text-decoration: none;
-        color: var.$primary-green;
-        border: 1px solid var.$primary-green;
+        color: var.$colour-white;
+        border: 1px solid var.$colour-white;
         border-radius: 1rem;
         transition: all .1s;
 
@@ -83,14 +85,13 @@ footer {
         }
 
         &:hover {
-            background-color: var.$primary-green;
-            color: var.$colour-white;
+            background-color: var.$dark-blue;
         }
     }
 
     &__heading {
         font-size: 1.4rem;
-        color: var.$primary-green;
+        color: var.$colour-white;
         margin-bottom: 0.5rem;
     }
 

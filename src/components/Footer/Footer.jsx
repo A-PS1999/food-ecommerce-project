@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from '../../utils/AuthContextProvider';
 import './Footer.scss';
 
 const scrollToTop = () => {
@@ -10,18 +11,39 @@ const scrollToTop = () => {
 }
 
 export default function Footer() {
+
+    const { loggedIn, setLoggedIn } = useContext(AuthContext);
+
+    const handleLogOut = async () => {
+        try {
+            await callFetch(`${BASE_URL}/log-out`, {
+                method: 'post'
+            })
+            setLoggedIn(false);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
-            <button onClick={() => scrollToTop()} className="to-top-button">Back to top</button>
+            <div className="outer-footer">
+                <button onClick={() => scrollToTop()} className="to-top-button">Back to top</button>
             <footer>
                 <Link to="/" className="footer-logo-link">
                     <img src="/logo.svg" alt="WorldFoods" className="footer-logo" />
                 </Link>
                 <div className="footer-link-container">
                     <h3 className="footer-link-container__heading">Get Started</h3>
-                    <Link to="/log-in" className="footer-link-container__link--first">
-                        Log In
-                    </Link>
+                    {!loggedIn ? <>
+                        <Link to="/log-in" className="footer-link-container__link--first">
+                            Log In
+                        </Link>
+                    </> : <>
+                        <Link to="/" onClick={() => handleLogOut()} className="footer-link-container__link--first">
+                            Log Out
+                        </Link>
+                    </>}
                     <Link to="/register" className="footer-link-container__link">
                         Register
                     </Link>
@@ -32,6 +54,7 @@ export default function Footer() {
                     <a href="https://www.linkedin.com/in/samuel-arnold-parra-2899721b6/" className="footer-link-container__link">LinkedIn</a>
                 </div>
             </footer>
+            </div>
         </>
     )
 }

@@ -3,7 +3,7 @@ module.exports = (request, response, next) => {
         response.locals.user = request.user;
         next();
     } else {
-        response.sendStatus(401);
+        response.status(401).send('No session');
     }
     return null;
 }

@@ -1,31 +1,33 @@
-import React, { useRef } from "react";
-import useFetch from '../../hooks/useFetch';
+import React, { useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../utils/AuthContextProvider";
+import useFetch from "../../hooks/useFetch";
 import './Register.scss';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Register() {
 
     const { register, handleSubmit, watch } = useForm();
+    const { callFetch, fetchState } = useFetch();
+    const { setLoggedIn, setUserData } = useContext(AuthContext);
     const navigate = useNavigate();
     const passwordEntry = useRef({});
     passwordEntry.current = watch("password", "");
 
-    const submitData = (data) => {
-        const fetchCall = useFetch(`${BASE_URL}/register`, {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            mode: 'cors',
-            credentials: 'true',
-            body: data 
-        })
-
-        if (fetchCall.fetchState.status === 'success') {
-            navigate("/");
+    useEffect(() => {
+        if (fetchState.status === 'success') {
+            setUserData(fetchState.data.user);
+            setLoggedIn(true);
+            navigate('/');
         }
+    }, [fetchState]);
+
+    const submitData = async (data) => {
+        await callFetch(`${BASE_URL}/register`, {
+            method: 'post',
+            body: JSON.stringify(data),
+        })
     };
 
     return (
@@ -47,6 +49,7 @@ export default function Register() {
                         type="password"
                         className="register-form__input"
                     />
+                    <h4 className="register-form__note">Passwords must be at least 6 characters long</h4>
                     <input {...register("confirmPassword", {
                         required: true,
                         validate: value => value === passwordEntry.current

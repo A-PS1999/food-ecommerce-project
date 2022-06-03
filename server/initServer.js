@@ -8,7 +8,7 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const { passport } = require('./passport');
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.VITE_CORS_ORIGIN,
     credentials: true
 }));
 
@@ -27,8 +27,7 @@ app.use(function(req, res, next) {
 
 app.use((err, req, res, next) => {
     if (err) {
-        req.logout();
-        next();
+        next(err);
     }
     res.status(err.status || 500).send(err.message);
 });
