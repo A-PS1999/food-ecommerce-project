@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const checkLoggedIn = require('./middleware/checkLoggedIn');
+const checkAdmin = require('./middleware/checkAdmin');
 
 const { UserQ } = require('../db/query-api');
 
-router.get('/api/admin/users/:pageNum', checkLoggedIn, async (req, res) => {
+router.get('/api/admin/users/:pageNum', checkLoggedIn, checkAdmin, async (req, res) => {
     const { pageNum } = req.params;
     const perPage = 15;
     const offset = ( pageNum - 1 ) * perPage;
@@ -11,9 +12,9 @@ router.get('/api/admin/users/:pageNum', checkLoggedIn, async (req, res) => {
 
     await UserQ.getUsers(perPage, offset)
         .then(([users, total]) => {
-            paginationData.currentPage = pageNum;
+            paginationData.currentPage = Number(pageNum);
             paginationData.lastPage = Math.ceil(total[0].total / perPage);
-            paginationData.totalPages = Number(total[0].total);
+            paginationData.totalItems = Number(total[0].total);
             res.json({ users, paginationData });
         })
         .catch((error) => {
@@ -22,7 +23,7 @@ router.get('/api/admin/users/:pageNum', checkLoggedIn, async (req, res) => {
         })
 })
 
-router.post('/api/admin/users/delete', checkLoggedIn, async (req, res) => {
+router.post('/api/admin/users/delete', checkLoggedIn, checkAdmin, async (req, res) => {
     const { toDelete } = req.body;
     try {
         await UserQ.deleteUser(toDelete);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
+import Pagination from "../Pagination/Pagination";
 import { Link } from "react-router-dom";
 import './UserManagement.scss';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -30,7 +31,6 @@ export default function UserManagement() {
             setUsers(fetchState.data.users);
             setPaginationData(fetchState.data.paginationData);
         }
-        console.log(fetchState);
     }, [fetchState])
 
     const handleDeleteUser = async (id, name) => {
@@ -73,6 +73,9 @@ export default function UserManagement() {
 					</>
 				}
             </div>
+            {paginationData ? (
+                <Pagination pageData={paginationData} changePageNum={setPageNum} />
+            ) : null}
         </>
     )
 }
