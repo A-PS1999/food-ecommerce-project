@@ -1,0 +1,89 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+
+.admin-header {
+    @include mix.admin-header;
+}
+
+.admin-grid {
+    align-self: center;
+    border: 1px solid var.$dark-grey;
+    border-radius: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 1rem 1rem;
+    padding: 1rem;
+    justify-items: center;
+
+    &__link-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        text-decoration: none;
+        text-align: center;
+        color: var.$colour-white;
+        border-radius: 0.5rem;
+        font-size: 1.3rem;
+        padding: 1rem;
+        background: linear-gradient(90deg, rgba(var.$primary-green,1) 0%, rgba(var.$secondary-green,1) 49%, rgba(var.$tertiary-green,1) 100%);
+
+        &:hover,
+        &:focus {
+            background: linear-gradient(90deg, rgba(var.$primary-green,1) 0%, rgba(var.$secondary-green,1) 75%, rgba(var.$tertiary-green,1) 100%);
+        }
+
+        &--orders {
+            @extend .admin-grid__link-container;
+            grid-area: 1 / 2;
+
+            @media only screen and (min-width: 769px) {
+                grid-area: 1 / 4;
+            }
+        }
+
+        &--img {
+            filter: grayscale(1) invert(1);
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+            width: 3rem;
+
+            @media only screen and (min-width: 769px) {
+                width: 50%;
+            }
+        }
+
+        &--categoryimg {
+            filter: grayscale(1) invert(1);
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+
+            @media only screen and (min-width: 769px) {
+                width: 40%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        &--productimg {
+            filter: grayscale(1) invert(1);
+            width: 2rem;
+
+            @media only screen and (min-width: 769px) {
+                width: 4.5rem;
+                margin-bottom: 0.5rem;  
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.7rem;
+            padding: 2rem;
+        }
+    }
+
+    @media only screen and (min-width: 769px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: none;
+        min-width: 75%;
+        padding: 3rem;
+    }
+}

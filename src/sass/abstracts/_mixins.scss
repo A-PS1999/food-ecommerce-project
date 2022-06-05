@@ -1,0 +1,15 @@
+@use '../base/animations';
+
+@mixin admin-header {
+    align-self: center;
+    animation: fadeFromBottom 1s ease-out;
+    font-size: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+
+    @media only screen and (min-width: 769px) {
+        font-size: 4rem;
+        margin-top: 3rem;
+        margin-bottom: 9rem;
+    }
+}

@@ -35,11 +35,12 @@
         height: 100vh;
         width: 40%;
         transition: transform .3s ease;
+        z-index: 1000;
         transform: translateX(100%);
         display: grid;
         grid-template-columns:  1fr 1fr 1fr 1fr;
         grid-template-rows: 10% 10% 10% 1fr;
-        grid-template-areas: ". . close close"
+        grid-template-areas: "admin admin close close"
                              "btn btn btn btn"
                              ". cart cart .";
 
@@ -54,6 +55,21 @@
             grid-area: close;
             margin-top: 1rem;
             margin-left: 1rem;
+        }
+
+        &__admin-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            grid-area: admin;
+            text-decoration: none;
+            color: var.$colour-white;
+
+            &__crown {
+                width: 30%;
+                filter: grayscale(1) invert(1);
+            }
         }
 
         &__button-group {
@@ -137,6 +153,28 @@
             margin-right: 2.5rem;
             display: flex;
             align-items: center;
+
+            &__admin-container {
+                text-decoration: none;
+                color: var.$colour-white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 1.4rem;
+                margin-right: 2rem;
+                padding: 1rem;
+                border-radius: 0.5rem;
+
+                &__crown {
+                    width: 3rem;
+                    filter: grayscale(1) invert(1);
+                }
+
+                &:hover,
+                &:focus {
+                    border: 1px solid var.$colour-white;
+                }
+            }
 
             &__acc-link {
                 text-decoration: none;

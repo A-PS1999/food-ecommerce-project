@@ -54,6 +54,12 @@ export default function Navbar() {
                     <div className="navbar__hamburger-container__hamburger" />  
                 </label>
                 <div className="navbar__link-group">
+                    {userData && userData.is_admin ?
+                        <Link to="/admin" className="navbar__link-group__admin-container">
+                            <img src="/crown.svg" alt="Crown" className="navbar__link-group__admin-container__crown" />
+                            Admin
+                        </Link>
+                    : null}
                     <Link to="/log-in" className="navbar__link-group__acc-link">
                         {!userData ? <div>Hello!</div> : <div>Hello, {userData.name}</div>}
                         <span>Your Account ▼</span>
@@ -76,6 +82,10 @@ export default function Navbar() {
                 <div className="navbar__mobile-menu">
                     <input name="menu-toggle" type="radio" id="navbar-close-burg" className="navbar__mobile-menu__toggle"/>
                     <label htmlFor="navbar-close-burg" className="navbar__mobile-menu__close">✖</label>
+                    <Link to="/admin" className="navbar__mobile-menu__admin-container">
+                        <img src="/crown.svg" alt="Crown" className="navbar__mobile-menu__admin-container__crown" />
+                        Admin
+                    </Link>
                     <div className="navbar__mobile-menu__button-group">
                         <Link to="/register" className="navbar__mobile-menu__button-group__button">Register</Link>
                         {!loggedIn ? <Link to="/log-in" className="navbar__mobile-menu__button-group__button">Log In</Link>
