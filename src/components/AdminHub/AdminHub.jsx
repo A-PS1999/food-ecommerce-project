@@ -17,7 +17,7 @@ export default function AdminHub() {
                     <img src="/users.svg" alt="Users" className="admin-grid__link-container--img" />
                     View/Manage Users
                 </Link>
-                <Link to="/" className="admin-grid__link-container">
+                <Link to="product-management" className="admin-grid__link-container">
                     <img src="/products.svg" alt="Users" className="admin-grid__link-container--productimg" />
                     View/Manage Products
                 </Link>

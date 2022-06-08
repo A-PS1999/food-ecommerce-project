@@ -28,9 +28,17 @@ const getUsers = db => async (perPage, offset) => {
     return Promise.all([users, total]);
 }
 
+const getUserAndAddresses = db => (userId) => {
+    return db("users").where('users.id', userId).select('*').leftJoin("addresses", function() {
+        this
+            .on('addresses.user_id', '=', 'users.id')
+    })
+}
+
 module.exports = db => ({
     addUser: addUser(db),
     deleteUser: deleteUser(db),
     findUserBy: findUserBy(db),
     getUsers: getUsers(db),
+    getUserAndAddresses: getUserAndAddresses(db),
 })

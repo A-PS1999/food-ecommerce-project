@@ -4,9 +4,8 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import useFetch from "../../hooks/useFetch";
 import './Register.scss';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export default function Register() {
+export default function Register({ BASE_URL }) {
 
     const { register, handleSubmit, watch } = useForm();
     const { callFetch, fetchState } = useFetch();

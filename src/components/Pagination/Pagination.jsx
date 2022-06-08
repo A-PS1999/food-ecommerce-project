@@ -11,7 +11,6 @@ export default function Pagination({ pageData, changePageNum }) {
     const toSelectedPage = (num) => setPageNum(num);
 
     useEffect(() => {
-        console.log(pageData);
         changePageNum(pageNum);
     }, [pageNum]);
 

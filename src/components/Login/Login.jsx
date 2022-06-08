@@ -4,9 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../utils/AuthContextProvider";
 import useFetch from '../../hooks/useFetch';
 import './Login.scss';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export default function Login() {
+export default function Login({ BASE_URL }) {
 
     const { register, handleSubmit } = useForm();
     const { callFetch, fetchState } = useFetch();

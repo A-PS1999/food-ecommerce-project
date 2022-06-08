@@ -1,0 +1,42 @@
+@use '../../../sass/abstracts/variables' as var;
+@use '../../../sass/abstracts/mixins' as mix;
+
+.userdetails-header {
+    @include mix.admin-header;
+}
+
+.userdetails-container {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid var.$dark-grey;
+    border-radius: 0.5rem;
+    padding: 2rem;
+
+    &__upper-box {
+        display: block;
+        text-align: center;
+        font-size: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var.$dark-grey;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 2rem;
+        }
+    }
+
+    &__lower-box {
+        margin-top: 0.8rem;
+        font-size: 1.3rem;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.6rem;
+        }
+    }
+
+    @media only screen and (min-width: 769px) {
+        padding: 3rem;
+        margin-top: -1.5rem;
+    }
+}

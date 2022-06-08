@@ -3,9 +3,8 @@ import useFetch from '../../hooks/useFetch';
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import './Navbar.scss';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export default function Navbar() {
+export default function Navbar({ BASE_URL }) {
 
     const { callFetch, fetchState } = useFetch();
     const { loggedIn, setLoggedIn, setUserData, userData } = useContext(AuthContext);

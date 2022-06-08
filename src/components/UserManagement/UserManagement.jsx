@@ -3,9 +3,8 @@ import useFetch from "../../hooks/useFetch";
 import Pagination from "../Pagination/Pagination";
 import { Link } from "react-router-dom";
 import './UserManagement.scss';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export default function UserManagement() {
+export default function UserManagement({ BASE_URL }) {
 
     const [pageNum, setPageNum] = useState(1);
     const [paginationData, setPaginationData] = useState(null);
@@ -55,11 +54,11 @@ export default function UserManagement() {
             </header>
             <div className="users-container">
                 {users && users.length > 0 ? users.map((user) => {
-					return(
+					return (
 						<React.Fragment key={user.id}>
 							<div className="users-container__user">
                                 <p className="users-container__user__id">{user.id}</p>
-								<Link to="/">{user.name}</Link>
+								<Link to={`/admin/user-management/user/${user.id}`}>{user.name}</Link>
                                 <p>Role: {user.is_admin ? 'Admin' : 'User'}</p>
                                 <button onClick={() => handleDeleteUser(user.id, user.name)}  className="users-container__user__del-btn">Delete</button>
 							</div>
