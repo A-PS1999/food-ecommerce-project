@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const checkLoggedIn = require('./middleware/checkLoggedIn');
 const checkAdmin = require('./middleware/checkAdmin');
+const multer = require('multer');
+const upload = multer();
 
-const { UserQ } = require('../db/query-api');
-const { ProdQ } = require('../db/query-api');
+const { UserQ, ProdQ, CatQ } = require('../db/query-api');
 
 router.get('/api/admin/users/:pageNum', checkLoggedIn, checkAdmin, async (req, res) => {
     const { pageNum } = req.params;
@@ -63,6 +64,38 @@ router.get('/api/admin/products/:pageNum', checkLoggedIn, checkAdmin, async (req
         .catch((error) => {
             console.log(error);
             res.status(400).send("An error occurred when fetching products");
+        })
+})
+
+router.post('/api/admin/products/create', upload.any(), checkLoggedIn, checkAdmin, async (req, res) => {
+    try {
+        await ProdQ.addProduct(req.body, req.files);
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(`${error}`)
+    }
+})
+
+router.post('/api/admin/products/delete', checkLoggedIn, checkAdmin, async (req, res) => {
+    const { toDelete } = req.body;
+    try {
+        await ProdQ.deleteProduct(toDelete);
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(`Failed to delete: ${error}`);
+    }
+})
+
+router.get('/api/admin/category-list', checkLoggedIn, checkAdmin, async (req, res) => {
+    await CatQ.categoriesNoPagination()
+        .then(cat_list => {
+            return res.json({ cat_list })
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(400).send("Could not fetch categories")
         })
 })
 

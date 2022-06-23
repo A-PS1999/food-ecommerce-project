@@ -1,0 +1,194 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
+
+.product-management-header {
+    @include mix.admin-header;
+}
+
+.add-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 90%;
+    margin-top: -1.5rem;
+    margin-bottom: 1.5rem;
+
+    &__add-btn {
+        @include mix.add-btn;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.7rem;
+            padding: 1.1rem;
+
+            &:hover,
+            &:focus {
+                animation: gradientShift 1s ease;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 769px) {
+        max-width: 79%;
+    }
+}
+
+.products-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 2rem;
+    border: 1px solid var.$dark-grey;
+    border-radius: 0.5rem;
+    min-width: 80%;
+    max-width: 90%;
+
+    @media only screen and (min-width: 769px) {
+        min-width: 70%;
+        max-width: 70%;
+    }
+}
+
+.product {
+    background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    & > summary {
+        &::marker {
+            display: none;
+        }
+
+        list-style: none;
+    }
+
+    & > *:not(.product__summary) {
+        margin-top: 0.5rem;
+        padding: 1rem;
+        background-color: var.$colour-white;
+        border-radius: 0.5rem;
+    }
+
+    &[open] > summary:before {
+        transform: rotate(90deg);
+        transition: all .5s ease;
+    }
+
+    &__innersummary {
+        display: flex;
+    }
+
+    &__summary {
+        padding-left: 1rem;
+        padding-right: 2.5rem;
+        position: relative;
+
+        &__id {
+            display: inline-block;
+            border-radius: 50%;
+            background-color: var.$colour-white;
+            margin-bottom: 0.4rem;
+            margin-right: 1rem;
+            font-size: 1.1rem;
+
+            &:before,
+            &:after {
+                content: '\200B';
+                display: inline-block;
+                line-height: 0px;
+                width: 0.5rem;
+                height: 0.5rem;
+            }
+
+            @media only screen and (min-width: 769px) {
+                font-size: 1.4rem;
+            }
+        }
+
+        &__stock {
+            color: var.$colour-white;
+            font-size: 1.2rem;
+
+            @media only screen and (min-width: 769px) {
+                font-size: 1.4rem;
+            }
+        }
+
+        &__name {
+            color: var.$colour-white;
+            font-size: 1.2rem;
+
+            @media only screen and (min-width: 769px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        &::before {
+            content: "×";
+            position: absolute;
+            color: var.$colour-white;
+            top: 1.2rem;
+            left: unset;
+            right: 0.6rem;
+            transform: rotate(-45deg);
+            transform-origin: center;
+            font-size: 2rem;
+            line-height: 1rem;
+            transition: 0.2s transform ease;
+
+            @media only screen and (min-width: 769px) {
+                font-size: 3rem;
+                top: 1.6rem;
+            }
+        }
+    }
+
+    &__infobox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__img {
+            width: 50%;
+            margin-bottom: 1rem;
+
+            @media only screen and (min-width: 769px) {
+                width: 35%;
+            }
+        }
+
+        &__price {
+            @media only screen and (min-width: 769px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        &__category {
+            @media only screen and (min-width: 769px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        &__del-btn {
+            @include mix.del-btn;
+            margin: 1rem 0;
+
+            @media only screen and (min-width: 769px) {
+
+                &:hover,
+                &:focus {
+                    animation: gradientShift 1s ease;
+                }
+            }
+        }
+
+        &__description {
+            @media only screen and (min-width: 769px) {
+                max-width: 85%;
+                font-size: 1.4rem;
+                text-align: center;
+            }
+        }
+    }
+}

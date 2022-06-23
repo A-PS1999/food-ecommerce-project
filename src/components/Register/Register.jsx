@@ -25,6 +25,9 @@ export default function Register({ BASE_URL }) {
     const submitData = async (data) => {
         await callFetch(`${BASE_URL}/register`, {
             method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data),
         })
     };

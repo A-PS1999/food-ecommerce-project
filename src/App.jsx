@@ -19,7 +19,7 @@ function App() {
 
   return (
       <>
-        <Navbar BASE_URL={BASE_URL}  />
+        <Navbar BASE_URL={BASE_URL} />
         <Routes>
           <Route exact path="/" index element={HomePage()} />
           <Route path="/register" element={Register({ BASE_URL })} />

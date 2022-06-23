@@ -23,6 +23,9 @@ export default function Login({ BASE_URL }) {
     const submitData = async (data) => {
         await callFetch(`${BASE_URL}/log-in`, {
             method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data),
         });
     }
