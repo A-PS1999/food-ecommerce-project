@@ -1,0 +1,56 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
+
+.add-cat-form {
+    display: flex;
+    flex-direction: column;
+
+    &__input {
+        @include mix.form-input;
+        margin-bottom: 1rem;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 2rem;
+            padding: 0.5rem;
+            padding-left: 1rem;
+            width: 75%;
+            margin: auto;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__label {
+        font-size: 1.2rem;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.4rem;
+            padding-left: 10%;
+        }
+    }
+
+    &__select {
+        margin-bottom: 1.5rem;
+
+        @media only screen and (min-width: 769px) {
+            width: 80%;
+            align-self: center;
+        }
+    }
+
+    &__button {
+        @include mix.add_btn;
+        width: 50%;
+        align-self: center;
+
+        &:hover,
+        &:focus {
+            animation: gradientShift 1s ease;
+        }
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.6rem;
+            width: 20%;
+        }
+    }
+}

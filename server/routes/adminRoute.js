@@ -88,6 +88,46 @@ router.post('/api/admin/products/delete', checkLoggedIn, checkAdmin, async (req,
     }
 })
 
+router.get('/api/admin/categories/:pageNum', checkLoggedIn, checkAdmin, async (req, res) => {
+    const { pageNum } = req.params;
+    const perPage = 15;
+    const offset = ( pageNum - 1 ) * perPage;
+    let paginationData = {};
+
+    await CatQ.getCategories(offset, perPage)
+        .then(([categories, total]) => {
+            paginationData.currentPage = Number(pageNum);
+            paginationData.lastPage = Math.ceil(total[0].total / perPage);
+            paginationData.totalItems = Number(total[0].total);
+            res.json({ categories, paginationData })
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).send("An error occurred when fetching categories");
+        })
+})
+
+router.post('/api/admin/categories/create', checkLoggedIn, checkAdmin, async (req, res) => {
+    try {
+        await CatQ.addCategory(req.body);
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(`${error}`)
+    }
+})
+
+router.post('/api/admin/categories/delete', checkLoggedIn, checkAdmin, async (req, res) => {
+    const { toDelete } = req.body;
+    try {
+        await CatQ.deleteCategory(toDelete);
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(`Failed to delete: ${error}`);
+    }
+})
+
 router.get('/api/admin/category-list', checkLoggedIn, checkAdmin, async (req, res) => {
     await CatQ.categoriesNoPagination()
         .then(cat_list => {

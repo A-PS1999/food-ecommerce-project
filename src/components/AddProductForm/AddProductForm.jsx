@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useFetch from "../../hooks/useFetch";
-import CategoryOptions from "./CategoryOptions";
+import CategoryOptions from "../CategoryOptions/CategoryOptions";
 import './AddProductForm.scss';
 
 export default function AddProductForm({ BASE_URL }) {

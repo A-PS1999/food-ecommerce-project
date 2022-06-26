@@ -15,6 +15,77 @@
     }
 }
 
+@mixin admin-list-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 2rem;
+    border: 1px solid var.$dark-grey;
+    border-radius: 0.5rem;
+    min-width: 80%;
+    max-width: 90%;
+
+    @media only screen and (min-width: 769px) {
+        min-width: 70%;
+        max-width: 70%;
+    }
+}
+
+@mixin admin-list-details {
+    background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+@mixin admin-list-summary {
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+    position: relative;
+
+    &::before {
+        content: "×";
+        position: absolute;
+        color: var.$colour-white;
+        top: 1.2rem;
+        left: unset;
+        right: 0.6rem;
+        transform: rotate(-45deg);
+        transform-origin: center;
+        font-size: 2rem;
+        line-height: 1rem;
+        transition: 0.2s transform ease;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 3rem;
+            top: 1.6rem;
+        }
+    }
+}
+
+@mixin admin-item-id {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: var.$colour-white;
+    margin-bottom: 0.4rem;
+    margin-right: 1rem;
+    font-size: 1.1rem;
+
+    &:before,
+    &:after {
+        content: '\200B';
+        display: inline-block;
+        line-height: 0px;
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+
+    @media only screen and (min-width: 769px) {
+        font-size: 1.4rem;
+    }
+}
+
 @mixin form-input {
     display: block;
     border: none;
