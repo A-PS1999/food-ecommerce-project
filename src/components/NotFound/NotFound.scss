@@ -1,0 +1,76 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
+
+.not-found-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__img {
+        max-width: 60%;
+
+        @media only screen and (min-width: 769px) {
+            max-width: 25%;
+        }
+    }
+
+    &__text {
+        text-align: center;
+        margin: 1rem 0;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 2.8rem;
+            margin: 2rem 0;
+        }
+    }
+
+    &__btn-group {
+        border: 1px solid var.$dark-grey;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+
+        &__link {
+            margin-right: 1.5rem;
+            text-decoration: none;
+            display: inline-block;
+            color: var.$colour-white;
+            padding: 0.7rem;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+            box-shadow: 0px 1px 5px 2px rgba(var.$colour-black, 0.30);
+            transition: all .5s ease;
+            background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
+
+            &:hover,
+            &:focus {
+                transform: translateY(-0.3rem);
+                box-shadow: 0px 1px 8px 2px rgba(var.$colour-black, 0.30);
+            }
+
+            @media only screen and (min-width: 769px) {
+                font-size: 1.6rem;
+            }
+        }
+
+        &__btn {
+            @include mix.add-btn;
+            transition: all .5s ease;
+
+            &:hover,
+            &:focus {
+                animation: gradientShift 1s ease;
+                transform: translateY(-0.3rem);
+                box-shadow: 0px 1px 8px 2px rgba(var.$colour-black, 0.30);
+            }
+
+            @media only screen and (min-width: 769px) {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            margin-bottom: 2rem;
+        }
+    }
+}
