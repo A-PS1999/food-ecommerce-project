@@ -1,0 +1,19 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+
+.order-management-header {
+    @include mix.admin-header;
+}
+
+.orders-container {
+    @include mix.admin-list-container;
+}
+
+.no-orders {
+    align-self: center;
+    font-size: 1.6rem;
+
+    @media only screen and (min-width: 769px) {
+        font-size: 1.8rem;
+    }
+}

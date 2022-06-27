@@ -10,6 +10,7 @@ import AdminHub from './components/AdminHub/AdminHub';
 import UserManagement from './components/UserManagement/UserManagement';
 import ProductManagement from './components/ProductManagement/ProductManagement';
 import CategoryManagement from './components/CategoryManagement/CategoryManagement';
+import OrderManagement from './components/OrderManagement/OrderManagement';
 import UserDetails from './components/UserManagement/UserDetails/UserDetails';
 import CartPage from './components/CartPage/CartPage';
 import NotFound from './components/NotFound/NotFound';
@@ -54,6 +55,13 @@ function App() {
                 <Route index={true} element={
                   <AdminRoute>
                     <CategoryManagement BASE_URL={BASE_URL} />
+                  </AdminRoute>
+                } />
+              </Route>
+              <Route path="order-management">
+                <Route index={true} element={
+                  <AdminRoute>
+                    <OrderManagement BASE_URL={BASE_URL} />
                   </AdminRoute>
                 } />
               </Route>
