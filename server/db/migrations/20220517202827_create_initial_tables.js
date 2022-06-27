@@ -10,12 +10,12 @@ exports.up = function(knex) {
     .createTable("sessions", (table) => {
         table.string('sid').notNullable().primary();
         table.json('sess').notNullable();
-        table.timestamp('expire', { useTz: true }).notNullable();
+        table.timestamp('expired', { useTz: true }).notNullable();
     })
     .createTable("addresses", (table) => {
         table.increments('id', { primaryKey: true });
         table.integer("user_id").unsigned().notNullable();
-        table.foreign("user_id").references("users.id");
+        table.foreign("user_id").references("users.id").onDelete('CASCADE');
         table.text("address_line1").notNullable();
         table.text("address_line2").notNullable();
         table.text("city").notNullable();
@@ -27,7 +27,8 @@ exports.up = function(knex) {
         table.increments('id', { primaryKey: true });
         table.text("cat_name").unique().notNullable();
         table.integer("parent_id").unsigned();
-        table.foreign("parent_id").references("product_categories.id");
+        table.foreign("parent_id").references("product_categories.id")
+            .onDelete('CASCADE');
     })
     .createTable("products", (table) => {
         table.increments('id', { primaryKey: true });
@@ -36,32 +37,38 @@ exports.up = function(knex) {
         table.integer("price").notNullable();
         table.integer('stock').unsigned().notNullable();
         table.integer("category_id").unsigned().notNullable();
-        table.foreign("category_id").references("product_categories.id");
+        table.foreign("category_id").references("product_categories.id")
+            .onDelete('CASCADE');
         table.timestamps(true, true);
     })
     .createTable("product_images", (table) => {
         table.increments('id', { primaryKey: true });
         table.string("image_url").notNullable();
+        table.string("image_name").notNullable();
         table.integer("product_id").unsigned().notNullable();
-        table.foreign("product_id").references("products.id");
+        table.foreign("product_id").references("products.id")
+            .onDelete('CASCADE');
     })
     .createTable("orders", (table) => {
         table.increments('id', { primaryKey: true });
         table.integer("total_price").notNullable();
         table.enu('status', ['payment_due', 'processing', 'cancelled', 'paid_for'], { useNative: true, enumName: 'order_status' });
         table.integer("address_id").unsigned().notNullable();
-        table.foreign("address_id").references("addresses.id");
+        table.foreign("address_id").references("addresses.id")
+            .onUpdate('CASCADE');
         table.integer("user_id").unsigned().notNullable();
-        table.foreign("user_id").references("users.id");
+        table.foreign("user_id").references("users.id").onDelete('CASCADE');
         table.timestamps(true, true);
     })
     .createTable("order_items", (table) => {
         table.increments('id', { primaryKey: true });
         table.integer("quantity").notNullable();
         table.integer("product_id").unsigned().notNullable();
-        table.foreign("product_id").references("products.id");
+        table.foreign("product_id").references("products.id")
+            .onDelete('CASCADE').onUpdate('CASCADE');
         table.integer("order_id").unsigned().notNullable();
-        table.foreign("order_id").references("orders.id");
+        table.foreign("order_id").references("orders.id")
+            .onDelete('CASCADE');
         table.timestamps(true, true);
     })
     .createTable("shipping", (table) => {
@@ -69,7 +76,7 @@ exports.up = function(knex) {
         table.enu("type", ['standard', 'express', { useNative: true, enumName: 'order_status' }]);
         table.enu("status", ['processing', 'canceled', 'shipped', 'delayed', 'delivered'], { useNative: true, enumName: 'shipping_status' });
         table.integer("order_id").unsigned().notNullable();
-        table.foreign("order_id").references("orders.id");
+        table.foreign("order_id").references("orders.id").onDelete('CASCADE');
         table.timestamps(true, true);
     })
     .createTable("reviews", (table) => {
@@ -77,17 +84,18 @@ exports.up = function(knex) {
         table.integer('rating').notNullable();
         table.text("review_body").notNullable();
         table.integer("product_id").unsigned().notNullable();
-        table.foreign("product_id").references("products.id");
+        table.foreign("product_id").references("products.id").onDelete('CASCADE');
         table.integer("user_id").unsigned().notNullable();
-        table.foreign("user_id").references("users.id");
+        table.foreign("user_id").references("users.id").onDelete('CASCADE');
         table.timestamps(true, true);
     })
     .createTable("wishlist", (table) => {
         table.increments('id', { primaryKey: true });
         table.integer("user_id").unsigned().notNullable();
-        table.foreign("user_id").references("users.id");
+        table.foreign("user_id").references("users.id").onDelete('CASCADE');
         table.integer("product_id").unsigned().notNullable();
-        table.foreign("product_id").references("products.id");
+        table.foreign("product_id").references("products.id")
+            .onDelete('CASCADE').onUpdate('CASCADE');
     })
 };
 

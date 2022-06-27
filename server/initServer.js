@@ -4,6 +4,8 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const cors = require('cors');
 const session = require('./db/session');
+const cloudinary = require('cloudinary').v2;
+cloudinary.config();
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const { passport } = require('./passport');
 

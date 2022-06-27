@@ -10,7 +10,7 @@ const scrollToTop = () => {
     });
 }
 
-export default function Footer() {
+export default function Footer(BASE_URL) {
 
     const { loggedIn, setLoggedIn } = useContext(AuthContext);
 

@@ -11,11 +11,34 @@ const addUser = db => async (name, password_hash, email) => {
     return newUser[0];
 }
 
+const deleteUser = db => (id) => {
+    return db("users").where('id', id).del();
+}
+
 const findUserBy = db => (field, value) => {
     return db("users").where({ [field]: value });
 }
 
+const getUsers = db => async (perPage, offset) => {
+    const users = db("users").select(['id', 'name', 'is_admin'])
+        .orderBy('name', 'asc')
+        .limit(perPage)
+        .offset(offset)
+    const total = db("users").select(db.raw('count(id) as total'))
+    return Promise.all([users, total]);
+}
+
+const getUserAndAddresses = db => (userId) => {
+    return db("users").where('users.id', userId).select('*').leftJoin("addresses", function() {
+        this
+            .on('addresses.user_id', '=', 'users.id')
+    })
+}
+
 module.exports = db => ({
     addUser: addUser(db),
-    findUserBy: findUserBy(db)
+    deleteUser: deleteUser(db),
+    findUserBy: findUserBy(db),
+    getUsers: getUsers(db),
+    getUserAndAddresses: getUserAndAddresses(db),
 })

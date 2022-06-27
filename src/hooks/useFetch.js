@@ -8,10 +8,7 @@ const initialState = {
 
 const presetOptions = {
     mode: 'cors',
-    credentials: 'include',
-    headers: {
-        'Content-Type': 'application/json'
-    }
+    credentials: 'include'
 }
 
 export default function useFetch() {
