@@ -53,8 +53,20 @@ const addProduct = db => async (formData, files) => {
     }
 }
 
+// NOTE: Below query can be very slow on large datasets, but for my purposes works fine.
+const getRandomProducts = db => async (limit) => {
+    return db("products").select('products.id', 'product_images.image_url')
+        .leftJoin('product_images', function () {
+            this
+                .on('products.id', '=', 'product_images.product_id')
+        })
+        .orderByRaw('random()')
+        .limit(limit)
+}
+
 module.exports = db => ({
     getAllProducts: getAllProducts(db),
     deleteProduct: deleteProduct(db),
     addProduct: addProduct(db),
+    getRandomProducts: getRandomProducts(db),
 })
