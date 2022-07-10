@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from
 import useFetch from '../../hooks/useFetch';
 import './Carousel.scss';
 
-export default function Carousel({ apiCall, numToDisplay, gutter, start=0 }) {
+export default function Carousel({ apiCall, numToDisplay, gutter, start=0, wishlist=false }) {
 
     const [carouselWidth, setCarouselWidth] = useState(0);
     const [items, setItems] = useState(null);
@@ -70,7 +70,7 @@ export default function Carousel({ apiCall, numToDisplay, gutter, start=0 }) {
     return (
         <>
             <div className="carousel">
-                {showArrow && 
+                {showArrow && items && 
                     <button className="carousel__button--left" onClick={() => scroll('left')}>
                         <img alt="Left" src="/chevron-left.svg" />
                     </button>
@@ -88,10 +88,14 @@ export default function Carousel({ apiCall, numToDisplay, gutter, start=0 }) {
                             </React.Fragment>
                         )
                     }) : <>
-                        <li>An error occurred.</li>
+                        {wishlist ? 
+                            <li className="carousel__none-message">Looks like you haven't added anything to your wishlist.</li>
+                            :
+                            <li className="carousel__none-message">An error occurred.</li>
+                        }
                     </>}
                 </ul>
-                {showArrow &&
+                {showArrow && items &&
                     <button className="carousel__button--right" onClick={() => scroll('right')}>
                         <img alt="Right" src="/chevron-right.svg" />
                     </button>

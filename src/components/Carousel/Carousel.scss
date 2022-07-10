@@ -83,4 +83,14 @@
             }
         }
     }
+
+    &__none-message {
+        font-size: 1.5rem;
+        text-align: center;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.8rem;
+            text-align: initial;
+        }
+    }
 }

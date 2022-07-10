@@ -64,9 +64,23 @@ const getRandomProducts = db => async (limit) => {
         .limit(limit)
 }
 
+// Similar to above but is far less random on small datasets due to clustering.
+// Written entirely as raw query due to lack of Knex query builder support for TABLESAMPLE
+const getProductSample = db => async (sampleSize, categoryId) => {
+    return db.raw(
+        `SELECT products.id, products.prod_name, product_images.image_url
+         FROM products
+         TABLESAMPLE SYSTEM_ROWS(${sampleSize})
+         LEFT JOIN product_images ON products.id = product_images.product_id
+         WHERE products.category_id = ${categoryId}
+        `
+    )
+}
+
 module.exports = db => ({
     getAllProducts: getAllProducts(db),
     deleteProduct: deleteProduct(db),
     addProduct: addProduct(db),
     getRandomProducts: getRandomProducts(db),
+    getProductSample: getProductSample(db),
 })
