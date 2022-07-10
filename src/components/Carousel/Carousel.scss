@@ -1,0 +1,96 @@
+@use '../../sass/abstracts/variables' as var;
+
+.carousel {
+    overflow: hidden;
+    padding: 2rem;
+    position: relative;
+
+    &__item-list {
+        overflow: auto;
+        display: flex;
+        list-style: none;
+        width: 100%;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 1rem;
+
+        &__item {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+
+            &__img {
+                align-self: center;
+            }
+        }
+
+        &::-webkit-scrollbar {
+            height: 0.5rem;
+
+            @media only screen and (min-width: 769px) {
+                height: 1rem;
+            }
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: 1rem;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var.$dark-grey;
+            border-radius: 1rem;
+        }
+    }
+
+    &__button {
+        position: absolute;
+        background-attachment: fixed;
+        border: none;
+        background: inherit;
+        padding: 1.5rem;
+        top: 40%;
+
+        &::before {
+            background: inherit;
+            content: '';
+            position: absolute;
+            border-radius: 1rem;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, .30);
+        }
+
+        &--left {
+            @extend .carousel__button;
+            display: none;
+
+            @media only screen and (min-width: 769px) {
+                display: block;
+                left: 5rem;
+            }
+        }
+
+        &--right {
+            @extend .carousel__button;
+            display: none;
+
+            @media only screen and (min-width: 769px) {
+                display: block;
+                right: 5rem;
+            }
+        }
+    }
+
+    &__none-message {
+        font-size: 1.5rem;
+        text-align: center;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.8rem;
+            text-align: initial;
+        }
+    }
+}

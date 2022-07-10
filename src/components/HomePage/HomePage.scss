@@ -1,0 +1,139 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/base/animations';
+
+.homepage-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5rem;
+
+    &__logo {
+        align-self: center;
+        width: 45%;
+        animation: fadeFromBottom 1s ease-out;
+
+        @media only screen and (min-width: 769px) {
+            width: 30%;
+        }
+    }
+
+    &__subtext {
+        background: linear-gradient(90deg, rgba(var.$primary-green,1) 0%, rgba(var.$secondary-green,1) 49%, rgba(var.$tertiary-green,1) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fadeFromBottom 1s ease-out;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 2rem;
+        }
+    }
+}
+
+.homepage-body {
+    padding: 0 1rem 0;
+
+    &__cards-container {
+        display: flex;
+        flex-flow: row wrap;
+        overflow: hidden;
+        padding: 1rem;
+        margin: 0 auto;
+        align-items: center;
+        border-top: 1px solid var.$dark-grey;
+        padding-top: 2.5rem;
+
+        &__subgroup {
+            display: flex;
+            flex-direction: column;
+
+            @media only screen and (min-width: 769px) {
+                max-width: 50%;
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            max-width: 70%;
+        }
+    }
+
+    &__assorted-products {
+        margin: 0 auto;
+        margin-bottom: 2rem;
+
+        &__title {
+            font-size: 1.8rem;
+            color: var.$dark-orange;
+            font-weight: 700;
+            text-align: center;
+
+            @media only screen and (min-width: 769px) {
+                text-align: initial;
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            max-width: 70%;
+        }
+    }
+
+    &__wishlist {
+        margin: 0 auto;
+        margin-bottom: 2rem;
+
+        &__title {
+            @extend .homepage-body__assorted-products__title;
+        }
+
+        @media only screen and (min-width: 769px) {
+            max-width: 70%;
+        }
+    }
+}
+
+.card {
+    position: relative;
+    height: 100%;
+    padding: 1.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var.$dark-grey;
+    max-width: 95%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+
+    &__header-text {
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        color: var.$dark-orange;
+    }
+
+    &__link-group {
+        display: flex;
+        align-items: center;
+
+        &__link {
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+
+            &__img {
+                max-width: inherit;
+            }
+
+            &__text {
+                max-width: inherit;
+                color: var.$colour-black;
+                font-size: 1.4rem;
+                text-align: center;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 769px) {
+        max-width: 75%;
+    }
+}

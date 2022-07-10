@@ -113,6 +113,7 @@
         right: 6rem;
         transition-delay: .3s;
         min-width: 15%;
+        z-index: 999999;
 
         @media only screen and (min-width: 769px) {
             display: flex;

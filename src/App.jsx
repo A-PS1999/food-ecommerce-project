@@ -23,7 +23,7 @@ function App() {
       <>
         <Navbar BASE_URL={BASE_URL} />
         <Routes>
-          <Route exact path="/" index element={HomePage()} />
+          <Route exact path="/" index element={HomePage({ BASE_URL })} />
           <Route path="/register" element={Register({ BASE_URL })} />
           <Route path="/log-in" element={Login({ BASE_URL })} />
           <Route path="/admin">
