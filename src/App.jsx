@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
+import ProductPage from './components/ProductPage/ProductPage';
 import AdminHub from './components/AdminHub/AdminHub';
 import UserManagement from './components/UserManagement/UserManagement';
 import ProductManagement from './components/ProductManagement/ProductManagement';
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/" index element={HomePage({ BASE_URL })} />
           <Route path="/register" element={Register({ BASE_URL })} />
           <Route path="/log-in" element={Login({ BASE_URL })} />
+          <Route path="/products/:productId" element={<ProductPage BASE_URL={BASE_URL} />} />
           <Route path="/admin">
               <Route index={true} element={
                 <AdminRoute>

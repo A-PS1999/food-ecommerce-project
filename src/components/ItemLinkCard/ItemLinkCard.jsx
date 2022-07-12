@@ -37,7 +37,7 @@ export default function ItemLinkCard({ url, headertext }) {
                         return (
                             <React.Fragment key={item.id}>
                                 <div className="item-link-card__item">
-                                    <Link to="/" className="item-link-card__item__link">
+                                    <Link to={`/products/${item.id}`} className="item-link-card__item__link">
                                         <img src={item.image_url} alt={item.prod_name} className="item-link-card__item__img" />
                                         <div className="item-link-card__item__name">{item.prod_name}</div>
                                     </Link>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import Spinner from "../../Spinner/Spinner";
 import './UserDetails.scss';
 
 export default function UserDetails({ BASE_URL }) {
 
-    let params = useParams();
+    const params = useParams();
     const [userDetails, setUserDetails] = useState(null);
     const { callFetch, fetchState } = useFetch();
 
@@ -51,7 +52,7 @@ export default function UserDetails({ BASE_URL }) {
                             ) : "This user does not have any saved address details."}
                         </div>
                     </>
-                ) : 'Loading...'}
+                ) : <Spinner/>}
             </div>
         </>
     )
