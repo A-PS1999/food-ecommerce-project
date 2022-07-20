@@ -42,7 +42,7 @@ export default function Register({ BASE_URL }) {
             <div className="form-container">
                 <form onSubmit={handleSubmit(submitData)} className="register-form">
                     <input {...register("name", { required: true })} placeholder="Name" className="register-form__input" />
-                    <input {...register("email", { required: true })} placeholder="Email" className="register-form__input" />
+                    <input {...register("email", { required: true, pattern: /\S+@\S+\.\S+/ })} placeholder="Email" className="register-form__input" />
                     <input {...register("password", {
                         required: true,
                         minLength: 6

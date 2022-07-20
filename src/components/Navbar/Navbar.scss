@@ -1,4 +1,5 @@
 @use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
 
 .navbar {
     background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
@@ -39,7 +40,7 @@
         transform: translateX(100%);
         display: grid;
         grid-template-columns:  1fr 1fr 1fr 1fr;
-        grid-template-rows: 10% 10% 10% 1fr;
+        grid-template-rows: 10% 15% 10% 1fr;
         grid-template-areas: "admin admin close close"
                              "btn btn btn btn"
                              ". cart cart .";
@@ -73,7 +74,6 @@
         }
 
         &__button-group {
-            margin-top: 0.5rem;
             display: flex;
             grid-area: btn;
             justify-content: space-evenly;
@@ -200,6 +200,8 @@
             &__cart-container {
                 padding: 1rem;
                 border-radius: 0.5rem;
+                text-decoration: none;
+                position: relative;
 
                 &:hover,
                 &:focus {
@@ -209,6 +211,15 @@
                 &__basket {
                     width: 3rem;
                     filter: grayscale(1) invert(1);
+                }
+
+                &__item-num {
+                    @include mix.admin-item-id;
+                    position: absolute;
+                    right: 2.2rem;
+                    top: -0.2rem;
+                    color: var.$colour-white;
+                    background-color: var.$dark-blue;
                 }
             }
         }

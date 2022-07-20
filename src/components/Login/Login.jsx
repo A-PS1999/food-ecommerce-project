@@ -39,7 +39,7 @@ export default function Login({ BASE_URL }) {
             </header>
             <div className="form-container">
                 <form onSubmit={handleSubmit(submitData)} className="login-form">
-                    <input {...register("email", { required: true })} placeholder="Email" className="login-form__input" />
+                    <input {...register("email", { required: true, pattern: /\S+@\S+\.\S+/ })} placeholder="Email" className="login-form__input" />
                     <input {...register("password", { required: true })} placeholder="Password" type="password" className="login-form__input" />
                     <button type="submit" className="login-form__button">Log In</button>
                 </form>

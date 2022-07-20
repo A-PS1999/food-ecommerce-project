@@ -46,10 +46,12 @@ router.post('/api/log-in', (req, res) => {
     });
 });
 
-router.post('/api/log-out', (req, res) => {
-    req.logout();
+router.post('/api/log-out', (req, res, next) => {
+    req.logout(function (err) {
+        if (err) { return next(err) };
+        res.sendStatus(200);
+    })
     req.session.destroy();
-    res.sendStatus(200);
     return null;
 })
 
