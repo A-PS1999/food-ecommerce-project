@@ -35,21 +35,10 @@ const getUserAndAddresses = db => (userId) => {
     })
 }
 
-const getSimpleUserWishlist = db => (userId, limit) => {
-    const wishlistQuery =  db("wishlist").where('wishlist.user_id', userId).select('*')
-        .leftJoin("products", "products.id", "wishlist.product_id")
-        .leftJoin("product_images", "product_images.product_id", "products.id")
-    if (limit != null) {
-        return wishlistQuery.limit(limit);
-    }
-    return wishlistQuery;
-}
-
 module.exports = db => ({
     addUser: addUser(db),
     deleteUser: deleteUser(db),
     findUserBy: findUserBy(db),
     getUsers: getUsers(db),
     getUserAndAddresses: getUserAndAddresses(db),
-    getSimpleUserWishlist: getSimpleUserWishlist(db),
 })

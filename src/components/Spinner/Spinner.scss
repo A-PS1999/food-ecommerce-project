@@ -1,0 +1,20 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/base/animations';
+
+.spinner-container {
+    width: 240px;
+    height: 240px;
+}
+
+.spinner {
+    color: var.$dark-orange;
+    font-size: 9rem;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 10% auto;
+    transform: translateZ(0);
+    animation: load 1.7s infinite ease, rotate360 1.7s infinite ease;
+}

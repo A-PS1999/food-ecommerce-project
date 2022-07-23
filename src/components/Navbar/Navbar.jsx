@@ -1,12 +1,16 @@
 import React, { useEffect, useContext } from "react";
 import useFetch from '../../hooks/useFetch';
+import { useCartStore } from "../../hooks/useCartStore";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import './Navbar.scss';
 
+const numItemsSelector = (state) => state.cart.length;
+
 export default function Navbar({ BASE_URL }) {
 
     const { callFetch, fetchState } = useFetch();
+    const numCartItems = useCartStore(numItemsSelector);
     const { loggedIn, setLoggedIn, setUserData, userData } = useContext(AuthContext);
 
     useEffect(() => {
@@ -75,6 +79,7 @@ export default function Navbar({ BASE_URL }) {
                         <div>No account? <Link to="/register">Register now</Link></div>
                     </div>
                     <Link to="/cart" className="navbar__link-group__cart-container">
+                        <span className="navbar__link-group__cart-container__item-num">{numCartItems}</span>
                         <img src="/basket.svg" alt="Shopping basket" className="navbar__link-group__cart-container__basket" />
                     </Link>
                 </div>

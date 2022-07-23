@@ -22,6 +22,7 @@
 
             &:hover,
             &:focus {
+                cursor: pointer;
                 animation: gradientShift 1s ease;
             }
         }

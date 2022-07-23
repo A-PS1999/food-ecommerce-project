@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
+import { Link } from "react-router-dom";
 import useFetch from '../../hooks/useFetch';
 import './Carousel.scss';
 
@@ -80,10 +81,12 @@ export default function Carousel({ apiCall, numToDisplay, gutter, start=0, wishl
                         return (
                             <React.Fragment key={item.id}>
                                 <li className="carousel__item-list__item" style={{ width: itemWidth, scrollSnapAlign: 'start' }}>
-                                    <img className="carousel__item-list__item__img" 
-                                        src={item.image_url} 
-                                        style={{ maxWidth: itemWidth, maxHeight: itemWidth }} 
-                                    />
+                                    <Link to={`/products/${item.id}`}>
+                                        <img className="carousel__item-list__item__img" 
+                                            src={item.image_url} 
+                                            style={{ maxWidth: itemWidth, maxHeight: itemWidth }} 
+                                        />
+                                    </Link>
                                 </li>
                             </React.Fragment>
                         )
