@@ -53,7 +53,7 @@ exports.up = function(knex) {
         table.increments('id', { primaryKey: true });
         table.integer("total_price").notNullable();
         table.enu('status', ['payment_due', 'processing', 'cancelled', 'paid_for'], { useNative: true, enumName: 'order_status' });
-        table.integer("address_id").unsigned().notNullable();
+        table.integer("address_id").unsigned();
         table.foreign("address_id").references("addresses.id")
             .onUpdate('CASCADE');
         table.integer("user_id").unsigned().notNullable();

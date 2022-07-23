@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import './Navbar.scss';
 
+const numItemsSelector = (state) => state.cart.length;
+
 export default function Navbar({ BASE_URL }) {
 
     const { callFetch, fetchState } = useFetch();
-    const numCartItems = useCartStore((state) => state.cart.length);
+    const numCartItems = useCartStore(numItemsSelector);
     const { loggedIn, setLoggedIn, setUserData, userData } = useContext(AuthContext);
 
     useEffect(() => {

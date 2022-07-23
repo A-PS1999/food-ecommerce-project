@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from "../../utils/AuthContextProvider";
 import useFetch from '../../hooks/useFetch';
 import './Login.scss';
@@ -11,11 +11,16 @@ export default function Login({ BASE_URL }) {
     const { callFetch, fetchState } = useFetch();
     const { setLoggedIn, setUserData } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (fetchState.status === 'success') {
             setUserData(fetchState.data.user);
             setLoggedIn(true);
+            if (location.state.from) {
+                console.log(location.state.from, { replace: true })
+                navigate(location.state.from);
+            }
             navigate('/');
         }
     }, [fetchState]);
