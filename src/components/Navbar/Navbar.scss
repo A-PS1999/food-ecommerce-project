@@ -1,5 +1,6 @@
 @use '../../sass/abstracts/variables' as var;
 @use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
 
 .navbar {
     background: linear-gradient(40deg, rgba(var.$head-foot-colour, 1) 11%, rgba(var.$light-orange, 1) 74%, rgba(var.$dark-orange, 1) 94%);
@@ -142,6 +143,25 @@
                 &:hover,
                 &:focus {
                     background: radial-gradient(circle, rgba(var.$primary-green, 1) 0%, rgba(var.$secondary-green, 1) 70%);
+                }
+            }
+
+            &__no-acct-link {
+                border-bottom: 1px solid var.$dark-grey;
+                padding-bottom: 1rem;
+            }
+
+            &__wishlist-link {
+                @include mix.del-btn;
+                background: linear-gradient(270deg, var.$dark-blue, var.$dark-orange);
+                background-size: 400% 400%;
+                margin-top: 1rem;
+                text-decoration: none;
+                font-size: 1.2rem;
+
+                &:hover,
+                &:focus {
+                    animation: gradientShift 1s ease;
                 }
             }
         }

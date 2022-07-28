@@ -18,7 +18,29 @@ const getSimpleUserWishlist = db => (userId, limit) => {
     return wishlistQuery;
 }
 
+const getPaginatedWishlist = db => async (userId, perPage, offset) => {
+    const wishlist = db("wishlist").where('wishlist.user_id', userId).select("*")
+        .leftJoin("products", "products.id", "wishlist.product_id")
+        .leftJoin("product_images", "product_images.product_id", "products.id")
+        .limit(perPage)
+        .offset(offset)
+    const total = db("wishlist").select((db.raw('count(id) as total')));
+    
+    return Promise.all([wishlist, total]);
+}
+
+const clearWishlist = db => (userId) => {
+    return db("wishlist").where("wishlist.user_id", userId).del();
+}
+
+const deleteFromWishlist = db => async (userId, productId) => {
+    return db('wishlist').where({ user_id: userId, product_id: productId }).del();
+}
+
 module.exports = db => ({
     addToWishlist: addToWishlist(db),
     getSimpleUserWishlist: getSimpleUserWishlist(db),
+    getPaginatedWishlist: getPaginatedWishlist(db),
+    clearWishlist: clearWishlist(db),
+    deleteFromWishlist: deleteFromWishlist(db),
 })

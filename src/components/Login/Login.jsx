@@ -17,10 +17,6 @@ export default function Login({ BASE_URL }) {
         if (fetchState.status === 'success') {
             setUserData(fetchState.data.user);
             setLoggedIn(true);
-            if (location.state.from) {
-                console.log(location.state.from, { replace: true })
-                navigate(location.state.from);
-            }
             navigate('/');
         }
     }, [fetchState]);

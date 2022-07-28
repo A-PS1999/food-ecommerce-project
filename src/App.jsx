@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import ProductPage from './components/ProductPage/ProductPage';
+import Wishlist from './components/Wishlist/Wishlist';
 import AdminHub from './components/AdminHub/AdminHub';
 import UserManagement from './components/UserManagement/UserManagement';
 import ProductManagement from './components/ProductManagement/ProductManagement';
@@ -28,6 +29,9 @@ function App() {
           <Route path="/register" element={Register({ BASE_URL })} />
           <Route path="/log-in" element={Login({ BASE_URL })} />
           <Route path="/products/:productId" element={<ProductPage BASE_URL={BASE_URL} />} />
+          <Route path="/user">
+            <Route path=":userId/wishlist" element={<Wishlist BASE_URL={BASE_URL} />} />
+          </Route>
           <Route path="/admin">
               <Route index={true} element={
                 <AdminRoute>
