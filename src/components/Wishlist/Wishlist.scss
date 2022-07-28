@@ -1,0 +1,179 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+
+.wishlist-header {
+    @include mix.admin-header;
+}
+
+.wishlist {
+    max-width: 95%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+
+    &__btn-container {
+        align-self: flex-end;
+        margin-right: 15%;
+
+        &__clear-btn {
+            @include mix.del-btn;
+            font-size: 1.7rem;
+
+            @media only screen and (min-width: 769px) {
+                background-size: 400% 400%;
+
+                &:hover,
+                &:focus {
+                    animation: gradientShift 1s ease;
+                }
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            grid-area: clear-btn;
+        }
+    }
+
+    &__list {
+
+        @media only screen and (min-width: 769px) {
+            grid-area: list;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var.$dark-grey;
+            border-bottom: 1px solid var.$dark-grey;
+
+            &__img-link {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                
+                &__img {
+                    max-width: 40%;
+
+                    @media only screen and (min-width: 769px) {
+                        max-width: 60%;
+                    }
+                }
+
+                @media only screen and (min-width: 769px) {
+                    justify-content: center;
+                }
+            }
+
+            &__infobox {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+
+                &__name {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    text-decoration: none;
+                    color: var.$colour-black;
+
+                    @media only screen and (min-width: 769px) {
+                        font-size: 2rem;
+                    }
+                }
+
+                &__price {
+                    font-size: 1.5rem;
+                    margin-top: 0.5rem;
+
+                    @media only screen and (min-width: 769px) {
+                        font-size: 2rem;
+                    }
+                }
+
+                &__category {
+                    font-size: 1.4rem;
+                    margin-bottom: 0.8rem;
+
+                    @media only screen and (min-width: 769px) {
+                        font-size: 1.7rem;
+                    }
+                }
+
+                @media only screen and (min-width: 769px) {
+                    justify-content: center;
+                }
+            }
+
+            &__btn-group {
+                
+                &__cart {
+                    @include mix.add-btn;
+                    margin-right: 2rem;
+
+                    @media only screen and (min-width: 769px) {
+                        margin-right: 0;
+                        margin-bottom: 1.5rem;
+                        font-size: 1.7rem;
+                        background-size: 400% 400%;
+
+                        &:hover,
+                        &:focus {
+                            animation: gradientShift 1s ease;
+                        }
+                    }
+                }
+
+                &__del {
+                    @include mix.del-btn;
+
+                    @media only screen and (min-width: 769px) {
+                        background-size: 400% 400%;
+                        font-size: 1.7rem;
+
+                        &:hover,
+                        &:focus {
+                            animation: gradientShift 1s ease;
+                        }
+                    }
+                }
+
+                @media only screen and (min-width: 769px) {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+
+            @media only screen and (min-width: 769px) {
+                display: grid;
+                grid-template-columns: 20% 1fr 1fr;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 769px) {
+        max-width: 85%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 10% 1fr;
+        grid-template-areas: ". . clear-btn"
+                             "list list list";
+    }
+}
+
+.wishlist-empty {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    margin-top: 20%;
+
+    @media only screen and (min-width: 769px) {
+        margin-top: 20%;
+        font-size: 3rem;
+    }
+}

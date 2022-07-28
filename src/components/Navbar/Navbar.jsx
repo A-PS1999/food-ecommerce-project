@@ -76,7 +76,10 @@ export default function Navbar({ BASE_URL }) {
                             <Link to="/" className="navbar__dropdown-menu__main-link" onClick={() => handleLogOut()}>Log Out</Link>
                         </>
                         }
-                        <div>No account? <Link to="/register">Register now</Link></div>
+                        <div className="navbar__dropdown-menu__no-acct-link">No account? <Link to="/register">Register now</Link></div>
+                        {loggedIn && (
+                            <Link to={`/user/${userData.id}/wishlist`} className="navbar__dropdown-menu__wishlist-link">Your Wishlist</Link>
+                        )}
                     </div>
                     <Link to="/cart" className="navbar__link-group__cart-container">
                         <span className="navbar__link-group__cart-container__item-num">{numCartItems}</span>

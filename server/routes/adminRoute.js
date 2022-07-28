@@ -6,16 +6,17 @@ const upload = multer();
 
 const { UserQ, ProdQ, CatQ } = require('../db/query-api');
 
+const defaultPerPage = 15;
+
 router.get('/api/admin/users/:pageNum', checkLoggedIn, checkAdmin, async (req, res) => {
     const { pageNum } = req.params;
-    const perPage = 15;
-    const offset = ( pageNum - 1 ) * perPage;
+    const offset = ( pageNum - 1 ) * defaultPerPage;
     let paginationData = {};
 
-    await UserQ.getUsers(perPage, offset)
+    await UserQ.getUsers(defaultPerPage, offset)
         .then(([users, total]) => {
             paginationData.currentPage = Number(pageNum);
-            paginationData.lastPage = Math.ceil(total[0].total / perPage);
+            paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);
             res.json({ users, paginationData });
         })
@@ -50,14 +51,13 @@ router.post('/api/admin/users/delete', checkLoggedIn, checkAdmin, async (req, re
 
 router.get('/api/admin/products/:pageNum', checkLoggedIn, checkAdmin, async (req, res) => {
     const { pageNum } = req.params;
-    const perPage = 15;
-    const offset = ( pageNum - 1 ) * perPage;
+    const offset = ( pageNum - 1 ) * defaultPerPage;
     let paginationData = {};
 
-    await ProdQ.getAllProducts(perPage, offset)
+    await ProdQ.getAllProducts(defaultPerPage, offset)
         .then(([products, total]) => {
             paginationData.currentPage = Number(pageNum);
-            paginationData.lastPage = Math.ceil(total[0].total / perPage);
+            paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);
             res.json({ products, paginationData })
         })
@@ -90,14 +90,13 @@ router.post('/api/admin/products/delete', checkLoggedIn, checkAdmin, async (req,
 
 router.get('/api/admin/categories/:pageNum', checkLoggedIn, checkAdmin, async (req, res) => {
     const { pageNum } = req.params;
-    const perPage = 15;
-    const offset = ( pageNum - 1 ) * perPage;
+    const offset = ( pageNum - 1 ) * defaultPerPage;
     let paginationData = {};
 
-    await CatQ.getCategories(offset, perPage)
+    await CatQ.getCategories(offset, defaultPerPage)
         .then(([categories, total]) => {
             paginationData.currentPage = Number(pageNum);
-            paginationData.lastPage = Math.ceil(total[0].total / perPage);
+            paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);
             res.json({ categories, paginationData })
         })
