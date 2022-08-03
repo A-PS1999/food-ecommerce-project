@@ -81,7 +81,7 @@ exports.up = function(knex) {
     })
     .createTable("reviews", (table) => {
         table.increments('id', { primaryKey: true });
-        table.integer('rating').notNullable();
+        table.decimal('rating').notNullable();
         table.text("review_body").notNullable();
         table.integer("product_id").unsigned().notNullable();
         table.foreign("product_id").references("products.id").onDelete('CASCADE');

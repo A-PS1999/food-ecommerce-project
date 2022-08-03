@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const checkLoggedIn = require('./middleware/checkLoggedIn');
 
-const { WishQ } = require('../db/query-api');
+const { WishQ, RevQ } = require('../db/query-api');
 
 router.post('/api/user/:userId/add-to-wishlist', async (req, res) => {
     const { userId } = req.params;
@@ -65,12 +65,26 @@ router.post('/api/user/:userId/wishlist/delete', checkLoggedIn, async (req, res)
 
     await WishQ.deleteFromWishlist(userId, toDelete)
         .then((_) => {
-            return res.status(200).send("Item successfully deleted.")
+            return res.status(200).send("Item successfully deleted")
         })
         .catch((error) => {
             console.log(error);
             res.status(400).send(`An error occured while attempting to delete item ID ${toDelete} from the wishlist of user ${userId}`);
         })
+})
+
+router.post('/api/user/:userId/add-review/:productId', checkLoggedIn, async (req, res) => {
+    const { userId, productId } = req.params;
+    req.body.userId = userId;
+    req.body.productId = productId;
+
+    await RevQ.addNewReview(req.body).then((_) => {
+        return res.status(200).send("Review successfully added");
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(400).send(`An error occurred when trying to add a review by user ${productId} for product ID ${productId}`);
+    })
 })
 
 module.exports = router;

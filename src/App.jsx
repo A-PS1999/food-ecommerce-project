@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import ProductPage from './components/ProductPage/ProductPage';
+import AddReviewPage from './components/AddReviewPage/AddReviewPage';
 import Wishlist from './components/Wishlist/Wishlist';
 import AdminHub from './components/AdminHub/AdminHub';
 import UserManagement from './components/UserManagement/UserManagement';
@@ -28,7 +29,10 @@ function App() {
           <Route exact path="/" index element={HomePage({ BASE_URL })} />
           <Route path="/register" element={Register({ BASE_URL })} />
           <Route path="/log-in" element={Login({ BASE_URL })} />
-          <Route path="/products/:productId" element={<ProductPage BASE_URL={BASE_URL} />} />
+          <Route path="/products/:productId">
+            <Route index={true} element={<ProductPage BASE_URL={BASE_URL} />} />
+            <Route path="add-review" element={<AddReviewPage BASE_URL={BASE_URL} />} />
+          </Route>
           <Route path="/user">
             <Route path=":userId/wishlist" element={<Wishlist BASE_URL={BASE_URL} />} />
           </Route>

@@ -4,6 +4,7 @@ import { AuthContext } from "../../utils/AuthContextProvider.jsx";
 import useFetch from "../../hooks/useFetch.js";
 import { useCartStore } from "../../hooks/useCartStore.js";
 import convertPrice from '../../utils/convertPrice';
+import StarRating from "../StarRating/StarRating.jsx";
 import Spinner from '../Spinner/Spinner';
 import './ProductPage.scss';
 

@@ -106,6 +106,7 @@
 
 @mixin del-btn {
     appearance: none;
+    cursor: pointer;
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
@@ -117,6 +118,7 @@
 
 @mixin add-btn {
     appearance: none;
+    cursor: pointer;
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
