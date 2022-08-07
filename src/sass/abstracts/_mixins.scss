@@ -86,6 +86,19 @@
     }
 }
 
+@mixin hub-link-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    text-align: center;
+    color: var.$colour-white;
+    border-radius: 0.5rem;
+    font-size: 1.3rem;
+    padding: 1rem;
+    background: linear-gradient(90deg, rgba(var.$primary-green,1) 0%, rgba(var.$secondary-green,1) 49%, rgba(var.$tertiary-green,1) 100%);
+}
+
 @mixin form-input {
     display: block;
     border: none;

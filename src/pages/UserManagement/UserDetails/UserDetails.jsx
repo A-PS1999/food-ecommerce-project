@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
-import Spinner from "../../Spinner/Spinner";
+import Spinner from "../../../components/Spinner/Spinner";
 import './UserDetails.scss';
 
 export default function UserDetails({ BASE_URL }) {

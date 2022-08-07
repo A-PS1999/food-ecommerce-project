@@ -1,22 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminRoute from './utils/AdminRoute';
-import HomePage from './components/HomePage/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import Register from './components/Register/Register';
-import Login from './components/Login/Login';
-import ProductPage from './components/ProductPage/ProductPage';
-import AddReviewPage from './components/AddReviewPage/AddReviewPage';
-import Wishlist from './components/Wishlist/Wishlist';
-import AdminHub from './components/AdminHub/AdminHub';
-import UserManagement from './components/UserManagement/UserManagement';
-import ProductManagement from './components/ProductManagement/ProductManagement';
-import CategoryManagement from './components/CategoryManagement/CategoryManagement';
-import OrderManagement from './components/OrderManagement/OrderManagement';
-import UserDetails from './components/UserManagement/UserDetails/UserDetails';
-import CartPage from './components/CartPage/CartPage';
-import NotFound from './components/NotFound/NotFound';
+import Register from './pages/Register/Register';
+import Login from './pages/Login/Login';
+import ProductPage from './pages/ProductPage/ProductPage';
+import AddReviewPage from './pages/AddReviewPage/AddReviewPage';
+import Wishlist from './pages/Wishlist/Wishlist';
+import AdminHub from './pages/AdminHub/AdminHub';
+import UserHub from './pages/UserHub/UserHub';
+import ReviewsProfile from './pages/ReviewsProfile/ReviewsProfile';
+import EditReviewPage from './pages/EditReviewPage/EditReviewPage';
+import UserManagement from './pages/UserManagement/UserManagement';
+import ProductManagement from './pages/ProductManagement/ProductManagement';
+import CategoryManagement from './pages/CategoryManagement/CategoryManagement';
+import OrderManagement from './pages/OrderManagement/OrderManagement';
+import UserDetails from './pages/UserManagement/UserDetails/UserDetails';
+import CartPage from './pages/CartPage/CartPage';
+import NotFound from './pages/NotFound/NotFound';
 import './App.scss';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -33,8 +36,13 @@ function App() {
             <Route index={true} element={<ProductPage BASE_URL={BASE_URL} />} />
             <Route path="add-review" element={<AddReviewPage BASE_URL={BASE_URL} />} />
           </Route>
-          <Route path="/user">
-            <Route path=":userId/wishlist" element={<Wishlist BASE_URL={BASE_URL} />} />
+          <Route path="/user/:userId">
+            <Route index={true} element={<UserHub />} />
+            <Route path="wishlist" element={<Wishlist BASE_URL={BASE_URL} />} />
+            <Route path="reviews">
+              <Route index={true} element={<ReviewsProfile BASE_URL={BASE_URL} />} />
+              <Route path=":reviewId/edit" element={<EditReviewPage BASE_URL={BASE_URL} />} />
+            </Route> 
           </Route>
           <Route path="/admin">
               <Route index={true} element={

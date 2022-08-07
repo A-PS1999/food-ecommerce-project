@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 import './OrderManagement.scss';
 
 export default function OrderManagement({ BASE_URL }) {

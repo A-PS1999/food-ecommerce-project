@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import Carousel from "../Carousel/Carousel";
-import ItemLinkCard from "../ItemLinkCard/ItemLinkCard";
+import Carousel from '../../components/Carousel/Carousel';
+import ItemLinkCard from "../../components/ItemLinkCard/ItemLinkCard";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import './HomePage.scss';

@@ -1,0 +1,120 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
+
+.reviewsprofile-header {
+    @include mix.admin-header;
+}
+
+.reviewsprofile {
+    @include mix.admin-list-container;
+
+    &__review {
+        @include mix.admin-list-details;
+
+        & > summary {
+            &::marker {
+                display: none;
+            }
+
+            list-style: none;
+        }
+
+        & > *:not(.reviewsprofile__review__summary) {
+            margin-top: 0.5rem;
+            padding: 1rem;
+            background-color: var.$colour-white;
+            border-radius: 0.5rem;
+        }
+
+        &[open] > summary:before {
+            transform: rotate(90deg);
+            transition: all .5s ease;
+        }
+
+        &__summary {
+            @include mix.admin-list-summary;
+
+            &__prodname {
+                color: var.$colour-white;
+                font-size: 1.2rem;
+
+                @media only screen and (min-width: 769px) {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+
+        &__innersummary {
+            display: flex;
+
+            &__id {
+                @include mix.admin-item-id;
+            }
+        }
+
+        &__infobox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &__img {
+                width: 50%;
+                margin-bottom: 1rem;
+
+                @media only screen and (min-width: 769px) {
+                    width: 35%;
+                }
+            }
+
+            &__btn-group {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+            }
+
+            &__del-btn {
+                @include mix.del-btn;
+
+                &:hover,
+                &:focus {
+                    animation: gradientShift 1s ease;
+                }
+
+                @media only screen and (min-width: 769px) {
+                    font-size: var.$default-font-size;
+                }
+            }
+
+            &__edit-btn {
+                @extend .reviewsprofile__review__infobox__del-btn;
+                background: linear-gradient(270deg, var.$light-orange, var.$dark-orange);
+                background-size: 400% 400%;
+                margin-left: 2rem;
+            }
+
+            &__review-header {
+                font-size: 1.5rem;
+
+                @media only screen and (min-width: 769px) {
+                    font-size: 1.6rem;
+                    margin-top: 1rem;
+                }
+            }
+            
+            &__review-container {
+                min-width: 80%;
+                text-align: center;
+
+                &__review {
+                    font-size: 1.4rem;
+
+                    @media only screen and (min-width: 769px) {
+                        font-size: 1.9rem;
+                    }
+                }
+            }
+        }
+    }
+}

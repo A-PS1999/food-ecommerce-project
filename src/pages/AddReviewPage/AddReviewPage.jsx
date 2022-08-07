@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import useFetch from "../../hooks/useFetch";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AuthContext } from "../../utils/AuthContextProvider";
-import StarRating from "../StarRating/StarRating";
+import StarRating from "../../components/StarRating/StarRating";
 import './AddReviewPage.scss';
 
 export default function AddReviewPage({ BASE_URL }) {

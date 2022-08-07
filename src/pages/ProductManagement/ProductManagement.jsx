@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import useFetch from '../../hooks/useFetch';
 import useModal from '../../hooks/useModal';
-import Pagination from '../Pagination/Pagination';
-import Modal from '../Modal/Modal';
-import AddProductForm from '../AddProductForm/AddProductForm';
+import Pagination from '../../components/Pagination/Pagination';
+import Modal from '../../components/Modal/Modal';
+import AddProductForm from '../../components/AddProductForm/AddProductForm';
 import convertPrice from '../../utils/convertPrice';
 import convertCatId from '../../utils/convertCatId';
 import './ProductManagement.scss';

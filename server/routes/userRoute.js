@@ -3,6 +3,8 @@ const checkLoggedIn = require('./middleware/checkLoggedIn');
 
 const { WishQ, RevQ } = require('../db/query-api');
 
+const defaultPerPage = 15;
+
 router.post('/api/user/:userId/add-to-wishlist', async (req, res) => {
     const { userId } = req.params;
     const { productId } = req.body;
@@ -29,14 +31,13 @@ router.get('/api/user/simple-wishlist/:userId/:limit', async (req, res) => {
 
 router.get('/api/user/:userId/wishlist/:pageNum', checkLoggedIn, async (req, res) => {
     const { userId, pageNum } = req.params;
-    const perPage = 15;
-    const offset = ( pageNum - 1 ) * perPage;
+    const offset = ( pageNum - 1 ) * defaultPerPage;
     let paginationData = {};
 
-    await WishQ.getPaginatedWishlist(userId, perPage, offset)
+    await WishQ.getPaginatedWishlist(userId, defaultPerPage, offset)
         .then(([wishlist, total]) => {
             paginationData.currentPage = Number(pageNum);
-            paginationData.lastPage = Math.ceil(total[0].total / perPage);
+            paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);
             res.json({ wishlist, paginationData })
         })
@@ -85,6 +86,37 @@ router.post('/api/user/:userId/add-review/:productId', checkLoggedIn, async (req
         console.log(error);
         res.status(400).send(`An error occurred when trying to add a review by user ${productId} for product ID ${productId}`);
     })
+})
+
+router.post('/api/user/:userId/reviews/delete', checkLoggedIn, async (req, res) => {
+    const { toDelete } = req.body;
+
+    await RevQ.deleteReview(toDelete)
+        .then((_) => {
+            return res.status(200).send("Review successfully deleted");
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).send(`An error occurred while trying to delete review ${toDelete}`);
+        })
+})
+
+router.get('/api/user/:userId/reviews/:pageNum', checkLoggedIn, async (req, res) => {
+    const { userId, pageNum } = req.params;
+    const offset = ( pageNum - 1 ) * defaultPerPage;
+    let paginationData = {};
+
+    await RevQ.getPaginatedUserReviews(userId, defaultPerPage, offset)
+        .then(([reviews, total]) => {
+            paginationData.currentPage = Number(pageNum);
+            paginationData.lastPage = Math.ceil(total.rows[0].total / defaultPerPage);
+            paginationData.totalItems = Number(total.rows[0].total);
+            res.json({ reviews, paginationData });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).send(`An error occurred while fetching the reviews of user ${userId}`);
+        })
 })
 
 module.exports = router;

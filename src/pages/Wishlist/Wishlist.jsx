@@ -5,7 +5,7 @@ import convertCatId from '../../utils/convertCatId';
 import useFetch from "../../hooks/useFetch";
 import { useCartStore } from "../../hooks/useCartStore";
 import { AuthContext } from "../../utils/AuthContextProvider.jsx";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 import './Wishlist.scss';
 
 const addItemSelector = (state) => state.addItem;
