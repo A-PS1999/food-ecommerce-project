@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import useModal from "../../hooks/useModal";
 import Pagination from "../../components/Pagination/Pagination";
-import Modal from "../Modal/Modal";
+import Modal from "../../components/Modal/Modal";
 import AddCategoryForm from '../../components/AddCategoryForm/AddCategoryForm';
 import convertCatId from '../../utils/convertCatId';
 import './CategoryManagement.scss';

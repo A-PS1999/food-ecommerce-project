@@ -101,6 +101,20 @@ router.post('/api/user/:userId/reviews/delete', checkLoggedIn, async (req, res) 
         })
 })
 
+router.post('/api/user/:userId/reviews/:reviewId/update', checkLoggedIn, async (req, res) => {
+    const { reviewId } = req.params;
+    const { rating, body } = req.body;
+
+    await RevQ.updateReview(reviewId, rating, body)
+        .then((response) => {
+            return res.json({ response });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).send(`An error occurred while trying to update review ID ${reviewId}`);
+        })
+})
+
 router.get('/api/user/:userId/reviews/:pageNum', checkLoggedIn, async (req, res) => {
     const { userId, pageNum } = req.params;
     const offset = ( pageNum - 1 ) * defaultPerPage;

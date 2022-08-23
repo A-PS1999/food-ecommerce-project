@@ -17,6 +17,7 @@ const updateReview = db => async (id, rating, body) => {
 
 const getPaginatedUserReviews = db => async (userId, perPage, offset) => {
     const reviews = db("reviews")
+        .where('reviews.user_id', userId)
         .select('reviews.rating', 'reviews.review_body', 'products.id', 'products.prod_name', 'product_images.image_url')
         .leftJoin('products', 'reviews.product_id', 'products.id')
         .leftJoin('product_images', 'reviews.product_id', 'product_images.product_id')
@@ -26,9 +27,21 @@ const getPaginatedUserReviews = db => async (userId, perPage, offset) => {
     return Promise.all([reviews, total]);                                                             // when not done with .raw()
 }
 
+const getProductReviewSample = db => async (productId, sampleSize) => {
+    return db.raw(
+        `SELECT reviews.*, users.name 
+        FROM reviews
+        TABLESAMPLE SYSTEM_ROWS(${sampleSize})
+        LEFT JOIN users ON reviews.user_id = users.id
+        WHERE reviews.product_id = ${productId}
+        `
+    )
+}
+
 module.exports = db => ({
     addNewReview: addNewReview(db),
     deleteReview: deleteReview(db),
     updateReview: updateReview(db),
     getPaginatedUserReviews: getPaginatedUserReviews(db),
+    getProductReviewSample: getProductReviewSample(db),
 })

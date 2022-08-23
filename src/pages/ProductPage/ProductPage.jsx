@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback, useContext } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider.jsx";
 import useFetch from "../../hooks/useFetch.js";
 import { useCartStore } from "../../hooks/useCartStore.js";
 import convertPrice from '../../utils/convertPrice';
-import StarRating from "../../components/StarRating/StarRating.jsx";
+import ReviewsComponent from "../../components/ReviewsComponent/ReviewsComponent.jsx";
 import Spinner from '../../components/Spinner/Spinner';
 import './ProductPage.scss';
 
@@ -14,7 +14,8 @@ export default function ProductPage({ BASE_URL }) {
 
     const { productId } = useParams();
     const [productDetails, setProductDetails] = useState(null);
-    const [closed, setClosed] = useState(false);
+    const [descClosed, setDescClosed] = useState(false);
+    const [reviewsClosed, setReviewsClosed] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const { callFetch, fetchState } = useFetch();
     const addItem = useCartStore(addItemSelector);
@@ -22,6 +23,7 @@ export default function ProductPage({ BASE_URL }) {
     const location = useLocation();
     const { userData } = useContext(AuthContext);
     const descriptionRef = useRef();
+    const reviewsRef = useRef();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -116,8 +118,8 @@ export default function ProductPage({ BASE_URL }) {
                             <section className="product-page__description-section">
                                 <dl>
                                     <dt 
-                                        className={closed ? "product-page__description-section__accordion-header closed" : "product-page__description-section__accordion-header"} 
-                                        onClick={() => setClosed(!closed)}
+                                        className={descClosed ? "product-page__description-section__accordion-header closed" : "product-page__description-section__accordion-header"} 
+                                        onClick={() => setDescClosed(!descClosed)}
                                         >
                                         <h2 className="product-page__description-section__title">Description</h2>
                                     </dt>
@@ -126,6 +128,26 @@ export default function ProductPage({ BASE_URL }) {
                                             <p className="product-page__description-section__text">{productDetails.description}</p>
                                             <p>Product ID: {productDetails.id}</p>
                                         </article>
+                                    </dd>
+                                </dl>
+                            </section>
+                            <div className="product-page__add-review-container">
+                                <Link to={userData ? `/products/${productId}/add-review` : `/log-in`} className="product-page__add-review-container__btn">
+                                    Add Review
+                                </Link>
+                            </div>
+                            <section className="product-page___reviews-section">
+                                <dl>
+                                    <dt
+                                        className={reviewsClosed ? "product-page__reviews-section__accordion-header closed" : "product-page__reviews-section__accordion-header"} 
+                                        onClick={() => setReviewsClosed(!reviewsClosed)}
+                                        >
+                                        <h2 className="product-page__reviews-section__title">Reviews</h2>
+                                    </dt>
+                                    <dd className="product-page__reviews-section__accordion-content" style={reviewsRef.current && { height: reviewsRef.current.clientHeight }}>
+                                        <div className="product-page__reviews-section__accordion-content__item" ref={reviewsRef}>
+                                            <ReviewsComponent queryString={`${BASE_URL}/get-product-reviews-sample/${productId}/${9}`} />
+                                        </div>
                                     </dd>
                                 </dl>
                             </section>

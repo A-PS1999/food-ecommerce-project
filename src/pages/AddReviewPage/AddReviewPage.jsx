@@ -70,7 +70,12 @@ export default function AddReviewPage({ BASE_URL }) {
                     name="rating"
                     required
                     render={({ field: { onChange } }) => (
-                        <StarRating onChange={onChange} />
+                        <StarRating 
+                            onClick={onChange}
+                            mainClassName="star-rating"
+                            noStarsClassName="star-rating__empty-star-group"
+                            starsClassName="star-rating__star-group"
+                        />
                     )}
                 />
                 <textarea 

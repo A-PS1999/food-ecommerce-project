@@ -1,0 +1,25 @@
+@use '../../sass/abstracts/variables' as var;
+
+.reviews {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &__item {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+
+        &__title {
+            font-size: 1.8rem;
+        }
+
+        &__rating-container {
+            align-self: center;
+        }
+
+        &__paragraph {
+            font-size: 1.6rem;
+        }
+    }
+}

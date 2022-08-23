@@ -196,27 +196,7 @@
         grid-area: description;
 
         &__accordion-header {
-            cursor: pointer;
-            display: block;
-            position: relative;
-            transition: all .3s ease-in-out;
-            float: none;
-            clear: both;
-            border-top: 1px solid var.$dark-grey;
-            padding: 1.5rem 2rem 1.5rem 5px;
-
-            &::after {
-                content: "";
-                background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 14 13' xmlns='http://www.w3.org/2000/svg' stroke='%23f78a0c' stroke-width='2' fill='%23f78a0c' fill-rule='evenodd' stroke-dasharray='0,0' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11.609 6.535 7.074 11.23M2.378 6.696l4.696 4.535'/%3E%3C/svg%3E") scroll no-repeat 50% 50%;
-                width: 14px;
-                height: 13px;
-                top: 37%;
-                right: 12px;
-                transform: translate(0) rotate(-180deg);
-                transform-origin: 50% 60%;
-                position: absolute;
-                transition: all .3s ease-in-out;
-            }
+            @include mix.accordion-header;
 
             & + .product-page__description-section__accordion-content::before {
                 content: " ";
@@ -227,35 +207,14 @@
                 left: 5%;
                 z-index: 1;
             }
-
+        
             &.closed + .product-page__description-section__accordion-content {
                 height: 0!important;
-            }
-
-            &.closed::after {
-                transform: translateZ(0) rotate(0);
             }
         }
 
         &__accordion-content {
-            overflow: hidden;
-            perspective-origin: 50% 0%;
-            perspective: 1000px;
-            position: relative;
-            border-bottom: 1px solid var.$dark-grey;
-            transition: all .3s cubic-bezier(.7, .5, .64, .92);
-
-            &__item {
-                position: absolute;
-                z-index: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                transform-origin: bottom center;
-                transform: translateZ(0) rotateX(0);
-                transform-style: preserve-3d;
-                transition: all .3s cubic-bezier(.5, .13, .24, .86);
-            }
+            @include mix.accordion-content;
         }
 
         &__title {
@@ -276,21 +235,88 @@
         }
     }
 
+    &__add-review-container {
+        display: flex;
+        justify-content: center;
+        padding: 1rem 0;
+
+        &__btn {
+            @include mix.add-btn;
+            background: linear-gradient(270deg, var.$light-orange, var.$dark-orange);
+            background-size: 400% 400%;
+            text-decoration: none;
+            font-size: 1.4rem;
+
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                animation: gradientShift 1s ease;
+            }
+            
+            @media only screen and (min-width: 769px) {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            padding: 0;
+            grid-area: add-review;
+            justify-content: flex-end;
+            align-items: center;
+            margin-right: 5rem;
+        }
+    }
+
     &__category {
         grid-area: category;
         font-size: 1.3rem;
         margin-top: .50rem;
     }
 
+    &__reviews-section {
+        grid-area: reviews;
+
+        &__title {
+            font-size: 1.7rem;
+
+            @media only screen and (min-width: 769px) {
+                font-size: 2.2rem;
+            }
+        }
+
+        &__accordion-header {
+            @include mix.accordion-header;
+
+            & + .product-page__reviews-section__accordion-content::before {
+                content: " ";
+                height: 13px;
+                width: 90%;
+                position: absolute;
+                top: -14px;
+                left: 5%;
+                z-index: 1;
+            }
+        
+            &.closed + .product-page__reviews-section__accordion-content {
+                height: 0!important;
+            }
+        }
+
+        &__accordion-content {
+            @include mix.accordion-content;
+        }
+    }
+
     @media only screen and (min-width: 769px) {
         display: grid;
         grid-template-columns: 50% 50%;
-        grid-template-rows: min-content min-content min-content min-content min-content min-content;
+        grid-template-rows: min-content min-content min-content min-content min-content min-content min-content;
         grid-template-areas: "image product-name"
                             "image price"
                             "image stock"
                             "image basket"
                             "image description"
-                            "image category";
+                            "add-review reviews"
+                            ". category";
     }
 }

@@ -1,0 +1,43 @@
+@use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
+
+.editreview-header {
+    @include mix.admin-header;
+}
+
+.editreview-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__rating-label {
+        font-size: 1.4rem;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.7rem;
+        }
+    }
+    
+    &__textbox {
+        @include mix.form-textbox;
+    }
+
+    &__submit-btn {
+        @include mix.add-btn;
+        margin: 2rem 0;
+        font-size: 1.6rem;
+
+        &:hover,
+        &:focus {
+            animation: gradientShift 1s ease;
+        }
+
+        @media only screen and (min-width: 769px) {
+            margin-top: 2.5rem;
+            margin-bottom: 4rem;
+            background-size: 400% 400%;
+            font-size: 2rem;
+        }
+    }
+}

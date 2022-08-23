@@ -8,6 +8,7 @@
 
 .reviewsprofile {
     @include mix.admin-list-container;
+    margin-bottom: 2rem;
 
     &__review {
         @include mix.admin-list-details;

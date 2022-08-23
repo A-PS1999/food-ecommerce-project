@@ -1,83 +1,117 @@
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useMemo } from "react";
+import useIsTouchDevice from '../../hooks/useIsTouchDevice';
+import Star from "./Star";
 import './StarRating.scss';
 
-export default function StarRating({ onChange, value=null, isDisabled=false }) {
+function calculatePosition(starsNum, positionX, width) {
+    const starWidth = width/starsNum; // width of individual star
+    let currentVal = starsNum;
 
-    const [selected, setSelected] = useState(value);
-
-    const handleRatingChange = (e) => {
-        setSelected(e.target.value);
-        onChange(Number(e.target.value));
+    for (let i=0; i < starsNum; i++) {
+        if (positionX <= starWidth * i + starWidth/4) {
+            if (i === 0 && positionX < starWidth/2) {
+                currentVal = 0;
+            } else currentVal = i;
+            break;
+        }
     }
+    return currentVal;
+}
+
+export default function StarRating({ onClick,
+    ratingValue=0,
+    starCount=5, 
+    isDisabled=false, 
+    mainClassName="star-rating", 
+    noStarsClassName="star-rating__empty-star-group", 
+    starsClassName="star-rating__star-group",
+    allowHalfStars=true, 
+    size=40 }) {
+
+    const { isTouchDevice } = useIsTouchDevice();
+
+    const [{ defaultValue, hoverValue }, dispatch] = useReducer((state, action) => {
+        switch (action.type) {
+            case 'POINTER_HOVER':
+                return { ...state, hoverValue: action.payload };
+            case 'POINTER_LEAVE':
+                return { defaultValue: state.defaultValue, hoverValue: null };
+            case 'POINTER_CLICK':
+                return { ...state, defaultValue: action.payload };
+            default:
+                return state;
+        }
+    }, { defaultValue: ratingValue, hoverValue: null })
+
+    useEffect(() => {
+        dispatch({ type: 'POINTER_CLICK', payload: ratingValue })
+    }, [ratingValue]);
+
+    const totalStars = useMemo(() => (allowHalfStars ? starCount * 2 : starCount), [allowHalfStars, starCount]);
+
+    const onPointerHover = (e) => {
+        const { clientX, currentTarget } = e;
+        const { left, width } = currentTarget.children[0].getBoundingClientRect();
+
+        const positionX = clientX - left;
+
+        const currentValue = calculatePosition(totalStars, positionX, width);
+
+        if (currentValue > 0 && hoverValue !== currentValue) {
+            dispatch({ type: 'POINTER_HOVER', payload: currentValue * 100 / totalStars })
+        }
+    }
+
+    const onMobilePointer = (e) => {
+        if (!isTouchDevice()) {
+            return;
+        }
+
+        onPointerHover(e);
+    }
+
+    const onPointerLeave = () => {
+        dispatch({ type: 'POINTER_LEAVE' })
+    }
+
+    const setRating = () => {
+        if (hoverValue) {
+            dispatch({ type: 'POINTER_CLICK', payload: hoverValue });
+            if (onClick) onClick(hoverValue);
+        }
+    }
+
+    const valueToPercentage = useMemo(() => // sets width percentage, calculated earlier
+        (!isDisabled && hoverValue && hoverValue) || (defaultValue && defaultValue), 
+        [isDisabled, hoverValue, defaultValue]
+    );
 
     return (
         <>
-            <div className="star-rating">
-                <input value="0" type="radio" id="rating-0" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === null} onChange={handleRatingChange}
-                />
-                <label aria-label="0 stars" htmlFor="rating-0" className="star-rating__star-label" />
-                <label aria-label="0.5 stars" htmlFor="rating-05" className="star-rating__star-label--half">
-                    <span className="star-rating__star-icon fa fa-star-half"></span>
-                </label>
-                <input id="rating-05" value="0.5" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "0.5"} onChange={handleRatingChange}
-                />
-                <label aria-label="1 star" htmlFor="rating-1" className="star-rating__star-label">
-                    <span className="star-rating__star-icon fa fa-star"></span>
-                </label>
-                <input id="rating-1" value="1" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "1"} onChange={handleRatingChange}
-                />
-                <label aria-label="1.5 stars" htmlFor="rating-15" className="star-rating__star-label--half">
-                    <span className="star-rating__star-icon fa fa-star-half"></span>
-                </label>
-                <input id="rating-15" value="1.5" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "1.5"} onChange={handleRatingChange}
-                />
-                <label aria-label="2 stars" htmlFor="rating-2" className="star-rating__star-label">
-                    <span className="star-rating__star-icon fa fa-star"></span>
-                </label>
-                <input id="rating-2" value="2" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "2"} onChange={handleRatingChange}
-                />
-                <label aria-label="2.5 stars" htmlFor="rating-25" className="star-rating__star-label--half">
-                    <span className="star-rating__star-icon fa fa-star-half"></span>
-                </label>
-                <input id="rating-25" value="2.5" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "2.5"} onChange={handleRatingChange}
-                />
-                <label aria-label="3 stars" htmlFor="rating-3" className="star-rating__star-label">
-                    <span className="star-rating__star-icon fa fa-star"></span>
-                </label>
-                <input id="rating-3" value="3" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "3"} onChange={handleRatingChange}
-                />
-                <label aria-label="3.5 stars" htmlFor="rating-35" className="star-rating__star-label--half">
-                    <span className="star-rating__star-icon fa fa-star-half"></span>
-                </label>
-                <input id="rating-35" value="3.5" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "3.5"} onChange={handleRatingChange}
-                />
-                <label aria-label="4 stars" htmlFor="rating-4" className="star-rating__star-label">
-                    <span className="star-rating__star-icon fa fa-star"></span>
-                </label>
-                <input id="rating-4" value="4" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "4"} onChange={handleRatingChange}
-                />
-                <label aria-label="4.5 stars" htmlFor="rating-45" className="star-rating__star-label--half">
-                    <span className="star-rating__star-icon fa fa-star-half"></span>
-                </label>
-                <input id="rating-45" value="4.5" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "4.5"} onChange={handleRatingChange}
-                />
-                <label aria-label="5 stars" htmlFor="rating-5" className="star-rating__star-label">
-                    <span className="star-rating__star-icon fa fa-star"></span>
-                </label>
-                <input id="rating-5" value="5" type="radio" name="rating" 
-                    disabled={isDisabled} className="star-rating__input" checked={selected === "5"} onChange={handleRatingChange}
-                />
-            </div>
+            <span style={{ display: 'inline-block' }}>
+                <span 
+                    className={mainClassName}
+                    onPointerMove={isDisabled ? undefined : onPointerHover}
+                    onPointerEnter={isDisabled ? undefined : onMobilePointer}
+                    onPointerLeave={isDisabled ? undefined : onPointerLeave}
+                    onClick={isDisabled ? undefined : setRating}
+                >
+                    <span className={noStarsClassName}>
+                        {[...Array(5)].map((_, idx) => (
+                            <React.Fragment key={idx}>
+                                <Star size={size} />
+                            </React.Fragment>
+                        ))}
+                    </span>
+                    <span style={{ width: `${valueToPercentage}%` }} className={starsClassName}>
+                        {[...Array(5)].map((_, idx) => (
+                            <React.Fragment key={idx}>
+                                <Star size={size} />
+                            </React.Fragment>
+                        ))}
+                    </span>
+                </span>
+            </span>
         </>
     )
 }

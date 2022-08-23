@@ -1,39 +1,29 @@
 @use '../../sass/abstracts/variables' as var;
 
 .star-rating {
-
-    &__input {
-        appearance: none;
-
-        &:checked ~ .star-rating__star-label .star-rating__star-icon {
-            color: var.$dark-grey;
-        }
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    user-select: none;
+    white-space: nowrap;
+    
+    &__empty-star-group {
+        display: inline-block;
+        color: var.$dark-grey;
     }
 
-    &__star-label {
-        cursor: pointer;
-        font-size: 3rem;
-        padding: 0 0.2rem;
-
-        &--half {
-            @extend .star-rating__star-label;
-            position: relative;
-            padding-right: 0;
-            margin-right: -1.7rem;
-            z-index: 3;
-        }
-    }
-
-    &__star-icon {
-        pointer-events: none;
+    &__star-group {
         color: var.$dark-orange;
+        white-space: nowrap;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        display: inline-block;
     }
 
-    &:hover .star-rating__star-label .star-rating__star-icon {
-        color: var.$dark-orange;
+    &__star {
+        display: inline;
     }
-}
-
-.star-rating__input:hover ~ .star-rating__star-label .star-rating__star-icon {
-    color: var.$dark-grey;
 }

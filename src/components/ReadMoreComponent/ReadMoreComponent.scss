@@ -1,0 +1,17 @@
+@use '../../sass/abstracts/variables' as var;
+
+.read-more {
+    font-weight: 700;
+    color: var.$colour-black;
+    transition: all .1s ease;
+
+    &:hover,
+    &:focus {
+        color: var.$dark-orange;
+        text-decoration: underline;
+    }
+}
+
+.read-less {
+    @extend .read-more;
+}

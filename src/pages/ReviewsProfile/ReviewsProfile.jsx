@@ -54,8 +54,8 @@ export default function ReviewsProfile({ BASE_URL }) {
         }
     }
 
-    const handleEditButtonClick = (body) => {
-        navigate(`/user/${userId}/reviews/:reviewId/edit`, { state: { review_body: body } });
+    const handleEditButtonClick = (reviewId, rating, body) => {
+        navigate(`/user/${userId}/reviews/${reviewId}/edit`, { state: { review_body: body, review_rating: rating } });
     }
 
     return (
@@ -82,11 +82,11 @@ export default function ReviewsProfile({ BASE_URL }) {
                                             Delete
                                         </button>
                                         <button type="button" className="reviewsprofile__review__infobox__edit-btn"
-                                            onClick={() => handleEditButtonClick(review.review_body)}>
+                                            onClick={() => handleEditButtonClick(review.id, review.rating, review.review_body)}>
                                             Edit
                                         </button>
                                     </div>
-                                    <StarRating onChange={null} value={String(review.rating)} isDisabled={true} />
+                                    <StarRating value={String(review.rating)} isDisabled={true} />
                                     <h2 className="reviewsprofile__review__infobox__review-header">Review Text:</h2>
                                     <div className="reviewsprofile__review__infobox__review-container">
                                         <p className="reviewsprofile__review__infobox__review-container__review">{review.review_body}</p>
