@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 const { ProdQ, RevQ } = require('../db/query-api');
 
+const defaultPerPage = 15;
+
 router.get('/api/products/:id', async (req, res) => {
     const { id } = req.params;
     await ProdQ.getProduct(id)
@@ -48,6 +50,25 @@ router.get('/api/get-product-reviews-sample/:productId/:num', async (req, res) =
             console.log(error);
             res.status(400).send(`An error occurred when fetching a sample of reviews for product ID ${productId}`)
         })
+})
+
+router.get('/api/get-product-reviews/:productId/:pageNum', async (req, res) => {
+    const { productId, pageNum } = req.params;
+    const offset = ( pageNum - 1 ) * defaultPerPage;
+    let paginationData = {};
+
+    const [reviews, total] = await RevQ.getPaginatedProductReviews(productId, defaultPerPage, offset)
+    const productDetails = await ProdQ.getProductNameAndImage(productId)
+    
+    try {
+        paginationData.currentPage = Number(pageNum);
+        paginationData.lastPage = Math.ceil(total.rows[0].total / defaultPerPage);
+        paginationData.totalItems = Number(total.rows[0].total);
+        res.json({ productDetails: productDetails[0], reviews, paginationData });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(400);
+    }
 })
 
 module.exports = router;

@@ -5,7 +5,7 @@ import ReadMoreComponent from '../ReadMoreComponent/ReadMoreComponent';
 import { Link } from "react-router-dom";
 import './ReviewsComponent.scss';
 
-export default function ReviewsComponent({ queryString }) {
+export default function ReviewsComponent({ queryString, productId }) {
 
     const [reviewData, setReviewData] = useState(null);
     const { callFetch, fetchState } = useFetch();
@@ -24,7 +24,6 @@ export default function ReviewsComponent({ queryString }) {
 
     useEffect(() => {
         if (fetchState.data.reviews) {
-            console.log(fetchState.data.reviews)
             setReviewData(fetchState.data.reviews);
         }
     }, [fetchState]);
@@ -42,9 +41,6 @@ export default function ReviewsComponent({ queryString }) {
                                         <StarRating 
                                             isDisabled={true}
                                             ratingValue={review.rating}
-                                            mainClassName="star-rating"
-                                            noStarsClassName="star-rating__empty-star-group"
-                                            starsClassName="star-rating__star-group"
                                         />
                                     </div>
                                     <ReadMoreComponent
@@ -59,7 +55,7 @@ export default function ReviewsComponent({ queryString }) {
                     ) : null
                 }
                 {reviewData && reviewData.length > 8 ? 
-                    <Link to="/" className="reviews__link-btn">
+                    <Link to={`/products/${productId}/reviews`} className="reviews__link-btn">
                         See all reviews
                     </Link> 
                 : null}

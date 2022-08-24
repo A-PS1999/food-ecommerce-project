@@ -149,6 +149,7 @@
             &__add-btn {
                 @include mix.add-btn;
                 background: linear-gradient(270deg, var.$light-orange, var.$dark-orange);
+                background-size: 400% 400%;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -179,7 +180,6 @@
                 &:focus,
                 &:hover {
                     cursor: pointer;
-                    animation: gradientShift 1s ease;
                 }
             }
         }

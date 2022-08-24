@@ -38,10 +38,22 @@ const getProductReviewSample = db => async (productId, sampleSize) => {
     )
 }
 
+const getPaginatedProductReviews = db => async (productId, perPage, offset) => {
+    const reviews = db("reviews")
+        .where('reviews.product_id', productId)
+        .select('reviews.id', 'reviews.rating', 'reviews.updated_at', 'reviews.review_body', 'users.name')
+        .leftJoin('users', 'reviews.user_id', 'users.id')
+        .limit(perPage)
+        .offset(offset);
+    const total = db.raw(`SELECT count(id) AS total FROM reviews WHERE reviews.product_id = ${productId}`);
+    return Promise.all([reviews, total]);
+}
+
 module.exports = db => ({
     addNewReview: addNewReview(db),
     deleteReview: deleteReview(db),
     updateReview: updateReview(db),
     getPaginatedUserReviews: getPaginatedUserReviews(db),
     getProductReviewSample: getProductReviewSample(db),
+    getPaginatedProductReviews: getPaginatedProductReviews(db),
 })

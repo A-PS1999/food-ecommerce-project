@@ -146,7 +146,10 @@ export default function ProductPage({ BASE_URL }) {
                                     </dt>
                                     <dd className="product-page__reviews-section__accordion-content" style={reviewsRef.current && { height: reviewsRef.current.clientHeight }}>
                                         <div className="product-page__reviews-section__accordion-content__item" ref={reviewsRef}>
-                                            <ReviewsComponent queryString={`${BASE_URL}/get-product-reviews-sample/${productId}/${9}`} />
+                                            <ReviewsComponent 
+                                                queryString={`${BASE_URL}/get-product-reviews-sample/${productId}/${9}`} 
+                                                productId={productId} 
+                                            />
                                         </div>
                                     </dd>
                                 </dl>

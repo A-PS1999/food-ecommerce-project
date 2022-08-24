@@ -22,4 +22,22 @@
             font-size: 1.6rem;
         }
     }
+
+    &__link-btn {
+        font-size: 1.4rem;
+        color: var.$dark-orange;
+        text-decoration: none;
+        transition: all .1s ease;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+            color: var.$light-orange;
+        }
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.5rem;
+            color: var.$dark-orange;
+        }
+    }
 }
