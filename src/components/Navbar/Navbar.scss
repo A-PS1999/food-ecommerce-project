@@ -151,17 +151,26 @@
                 padding-bottom: 1rem;
             }
 
-            &__wishlist-link {
-                @include mix.del-btn;
-                background: linear-gradient(270deg, var.$dark-blue, var.$dark-orange);
-                background-size: 400% 400%;
-                margin-top: 1rem;
-                text-decoration: none;
-                font-size: 1.2rem;
+            &__loggedin-title {
+                margin-top: 0.8rem;
+            }
 
-                &:hover,
-                &:focus {
-                    animation: gradientShift 1s ease;
+            &__link-group {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin-top: 0.4rem;
+
+                &__link {
+                    text-decoration: none;
+                    color: var.$colour-black;
+                    font-size: 1.3rem;
+
+                    &:hover,
+                    &:focus {
+                        color: var.$dark-orange;
+                        text-decoration: underline;
+                    }
                 }
             }
         }

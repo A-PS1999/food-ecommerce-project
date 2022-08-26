@@ -34,7 +34,7 @@ router.post('/api/log-in', (req, res) => {
             if (isEqual) {
                 return user[0];
             } else {
-                return res.status(401).send({ error: new Error('Invalid password') });
+                return res.sendStatus(401);
             }
         }).then(user => req.login(user, error => {
             if (error) {

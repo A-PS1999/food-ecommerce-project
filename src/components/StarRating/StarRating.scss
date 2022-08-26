@@ -1,0 +1,29 @@
+@use '../../sass/abstracts/variables' as var;
+
+.star-rating {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    user-select: none;
+    white-space: nowrap;
+    
+    &__empty-star-group {
+        display: inline-block;
+        color: var.$dark-grey;
+    }
+
+    &__star-group {
+        color: var.$dark-orange;
+        white-space: nowrap;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    &__star {
+        display: inline;
+    }
+}
