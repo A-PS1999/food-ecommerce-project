@@ -9,6 +9,16 @@
     }
 }
 
+@keyframes fadeFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(80%);
+    }
+    100% {
+        transform: translateX(0%)
+    }
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

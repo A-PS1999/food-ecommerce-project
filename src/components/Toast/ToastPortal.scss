@@ -20,6 +20,7 @@
 .toast-portal {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     gap: 1rem;
 
     &__toast {
@@ -28,6 +29,8 @@
         font-size: 1.4rem;
         animation: 0.5s fadeFromBottom ease;
         color: var.$colour-white;
+        max-width: 80%;
+        text-align: center;
 
         &--info {
             @extend .toast-portal__toast;
@@ -38,6 +41,11 @@
         &--error {
             @extend .toast-portal__toast;
             background: linear-gradient(270deg, var.$dark-red, var.$dark-orange);
+        }
+
+        @media only screen and (min-width: 769px) {
+            max-width: 60%;
+            animation: 0.5s fadeFromRight ease-out;
         }
     }
 }

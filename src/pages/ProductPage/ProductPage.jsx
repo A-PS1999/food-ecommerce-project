@@ -3,12 +3,14 @@ import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider.jsx";
 import useFetch from "../../hooks/useFetch.js";
 import { useCartStore } from "../../hooks/useCartStore.js";
+import { useToastStore } from "../../hooks/useToastStore.js";
 import convertPrice from '../../utils/convertPrice';
 import ReviewsComponent from "../../components/ReviewsComponent/ReviewsComponent.jsx";
 import Spinner from '../../components/Spinner/Spinner';
 import './ProductPage.scss';
 
 const addItemSelector = (state) => state.addItem;
+const createToastSelector = (state) => state.createToast;
 
 export default function ProductPage({ BASE_URL }) {
 
@@ -19,6 +21,7 @@ export default function ProductPage({ BASE_URL }) {
     const [quantity, setQuantity] = useState(1);
     const { callFetch, fetchState } = useFetch();
     const addItem = useCartStore(addItemSelector);
+    const createToast = useToastStore(createToastSelector);
     const navigate = useNavigate();
     const location = useLocation();
     const { userData } = useContext(AuthContext);
@@ -68,13 +71,19 @@ export default function ProductPage({ BASE_URL }) {
         if (!userData) {
             navigate('/log-in', { state: { from: location.pathname } });
         } else {
-            await callFetch(`${BASE_URL}/user/${userData.id}/add-to-wishlist`, {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ productId: productId })
-            })
+            try {
+                await callFetch(`${BASE_URL}/user/${userData.id}/add-to-wishlist`, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ productId: productId })
+                })
+                createToast("Item added successfully!", "info");
+            } catch (error) {
+                console.log(error);
+                createToast("An error occurred: Please try again later");
+            }
         }
     }
 

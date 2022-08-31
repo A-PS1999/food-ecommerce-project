@@ -2,8 +2,11 @@ import React, { useEffect, useContext } from "react";
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../utils/AuthContextProvider";
+import { useToastStore } from "../../hooks/useToastStore";
 import useFetch from '../../hooks/useFetch';
 import './Login.scss';
+
+const createToastSelector = (state) => state.createToast;
 
 export default function Login({ BASE_URL }) {
 
@@ -11,12 +14,19 @@ export default function Login({ BASE_URL }) {
     const { callFetch, fetchState } = useFetch();
     const { setLoggedIn, setUserData } = useContext(AuthContext);
     const navigate = useNavigate();
+    const createToast = useToastStore(createToastSelector);
 
     useEffect(() => {
         if (fetchState.status === 'success') {
             setUserData(fetchState.data.user);
             setLoggedIn(true);
             navigate('/');
+        }
+        if (fetchState.status === 'error') {
+            createToast(
+                "Login failed. Please check if your username and password are correct.",
+                "error"
+            )
         }
     }, [fetchState]);
 

@@ -8,7 +8,7 @@ const reducer = (state, action) => {
         case types.add:
             const newTimeout = setTimeout(() => {
                 state.dispatch({ type: 'REMOVE', id: action.toast.id })
-            }, 5000)
+            }, action.toast.duration)
             return { ...state, 
                 toastArray: [action.toast, ...state.toastArray],
                 toastTimers: new Map(state.toastTimers).set(action.toast.id, newTimeout)
