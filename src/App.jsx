@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminRoute from './utils/AdminRoute';
 import HomePage from './pages/HomePage/HomePage';
+import ToastPortal from './components/Toast/ToastPortal';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Register from './pages/Register/Register';
@@ -28,6 +29,7 @@ function App() {
 
   return (
       <>
+        <ToastPortal />
         <Navbar BASE_URL={BASE_URL} />
         <Routes>
           <Route exact path="/" index element={HomePage({ BASE_URL })} />

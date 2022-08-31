@@ -3,7 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import useFetch from "../../hooks/useFetch";
+import { useToastStore } from "../../hooks/useToastStore";
 import './Register.scss';
+
+const createToastSelector = (state) => state.createToast;
 
 export default function Register({ BASE_URL }) {
 
@@ -11,6 +14,7 @@ export default function Register({ BASE_URL }) {
     const { callFetch, fetchState } = useFetch();
     const { setLoggedIn, setUserData } = useContext(AuthContext);
     const navigate = useNavigate();
+    const createToast = useToastStore(createToastSelector);
     const passwordEntry = useRef({});
     passwordEntry.current = watch("password", "");
 
@@ -19,6 +23,12 @@ export default function Register({ BASE_URL }) {
             setUserData(fetchState.data.user);
             setLoggedIn(true);
             navigate('/');
+        }
+        if (fetchState.status === 'error') {
+            createToast(
+                "An error occurred. Please try again later.",
+                "error"
+            )
         }
     }, [fetchState]);
 
