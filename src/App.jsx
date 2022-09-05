@@ -15,6 +15,7 @@ import AdminHub from './pages/AdminHub/AdminHub';
 import UserHub from './pages/UserHub/UserHub';
 import ReviewsProfile from './pages/ReviewsProfile/ReviewsProfile';
 import EditReviewPage from './pages/EditReviewPage/EditReviewPage';
+import AddressDetails from './pages/AddressDetails/AddressDetails';
 import UserManagement from './pages/UserManagement/UserManagement';
 import ProductManagement from './pages/ProductManagement/ProductManagement';
 import CategoryManagement from './pages/CategoryManagement/CategoryManagement';
@@ -46,7 +47,8 @@ function App() {
             <Route path="reviews">
               <Route index={true} element={<ReviewsProfile BASE_URL={BASE_URL} />} />
               <Route path=":reviewId/edit" element={<EditReviewPage BASE_URL={BASE_URL} />} />
-            </Route> 
+            </Route>
+            <Route path="addresses" element={<AddressDetails BASE_URL={BASE_URL} />} />
           </Route>
           <Route path="/admin">
               <Route index={true} element={

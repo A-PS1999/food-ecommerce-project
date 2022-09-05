@@ -18,9 +18,9 @@ export default function UserHub() {
                     <img src="/megaphone.svg" className="userhub-grid__link-container__img" />
                     Your Reviews
                 </Link>
-                <Link to="/" className="userhub-grid__link-container--details">
+                <Link to="addresses" className="userhub-grid__link-container--details">
                     <img src="/address.svg" className="userhub-grid__link-container__img" />
-                    Manage Details
+                    Manage Address Details
                 </Link>
             </div>
         </>

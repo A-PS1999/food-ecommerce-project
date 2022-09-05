@@ -17,7 +17,7 @@ exports.up = function(knex) {
         table.integer("user_id").unsigned().notNullable();
         table.foreign("user_id").references("users.id").onDelete('CASCADE');
         table.text("address_line1").notNullable();
-        table.text("address_line2").notNullable();
+        table.text("address_line2");
         table.text("city").notNullable();
         table.text("post_code").notNullable();
         table.text("country").unsigned().notNullable();
