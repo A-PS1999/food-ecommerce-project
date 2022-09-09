@@ -26,10 +26,6 @@ export default function AutocompleteInput({ onChange, className, setCity }) {
         initService();
     }, []);
 
-    useEffect(() => {
-        console.log(suggestions);
-    }, [suggestions])
-
     const handleInputChange = (e) => {
         setAddressInput(e.target.value);
         onChange(e.target.value);
@@ -40,6 +36,7 @@ export default function AutocompleteInput({ onChange, className, setCity }) {
 
         e.preventDefault();
         setAddressInput(prediction.structured_formatting.main_text);
+        onChange(prediction.structured_formatting.main_text);
         setCity(townCityValue);
         setShowSuggestions(!showSuggestions);
     }
@@ -49,7 +46,7 @@ export default function AutocompleteInput({ onChange, className, setCity }) {
             <input className={className} onChange={(e) => handleInputChange(e)} value={addressInput} />
                 {showSuggestions && suggestions && suggestions.length > 0 ? (
                     <ul className="predictions-list">
-                        <button onClick={() => setShowSuggestions(!showSuggestions)} className="predictions-list__bottom-section__close-btn">
+                        <button type="button" onClick={() => setShowSuggestions(!showSuggestions)} className="predictions-list__close-btn">
                                 Close
                         </button>
                         {suggestions.map((prediction) => {

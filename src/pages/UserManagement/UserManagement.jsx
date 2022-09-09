@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import Pagination from "../../components/Pagination/Pagination";
+import { handleDelete } from "../../utils/handleDelete";
 import { Link } from "react-router-dom";
 import './UserManagement.scss';
 
@@ -32,21 +33,6 @@ export default function UserManagement({ BASE_URL }) {
         }
     }, [fetchState])
 
-    const handleDeleteUser = async (id, name) => {
-        if (window.confirm(`Are you sure you want to delete ${name}?`)) {
-            try {
-                await callFetch(`${BASE_URL}/admin/users/delete`, {
-                    method: 'post',
-                    body: JSON.stringify({ toDelete: id })
-                })
-                let updatedUsers = users.filter((user) => user.id !== id);
-                setUsers(updatedUsers);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-
     return (
         <>
             <header className="user-management-header">
@@ -60,7 +46,16 @@ export default function UserManagement({ BASE_URL }) {
                                 <p className="users-container__user__id">{user.id}</p>
 								<Link to={`/admin/user-management/user/${user.id}`}>{user.name}</Link>
                                 <p>Role: {user.is_admin ? 'Admin' : 'User'}</p>
-                                <button onClick={() => handleDeleteUser(user.id, user.name)}  className="users-container__user__del-btn">Delete</button>
+                                <button className="users-container__user__del-btn" onClick={() => handleDelete({
+                                    id: user.id,
+                                    route: `${BASE_URL}/admin/users/delete`,
+                                    fetchFunc: callFetch,
+                                    message: `Are you sure you want to delete ${user.name}?`,
+                                    stateFunc: setUsers,
+                                    state: users
+                                })}>
+                                    Delete
+                                </button>
 							</div>
 						</React.Fragment>
 						)
