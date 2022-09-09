@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const checkLoggedIn = require('./middleware/checkLoggedIn');
 
-const { WishQ, RevQ } = require('../db/query-api');
+const { WishQ, RevQ, AddrQ } = require('../db/query-api');
 
 const defaultPerPage = 15;
 
@@ -130,6 +130,61 @@ router.get('/api/user/:userId/reviews/:pageNum', checkLoggedIn, async (req, res)
         .catch((error) => {
             console.log(error);
             res.status(400).send(`An error occurred while fetching the reviews of user ${userId}`);
+        })
+})
+
+router.post('/api/user/:userId/addresses/add', checkLoggedIn, async (req, res) => {
+    const { userId } = req.params;
+    const addressInfo = req.body;
+
+    await AddrQ.addAddress(userId, addressInfo).then((_) => {
+        return res.sendStatus(200);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(400);
+    })
+})
+
+router.post('/api/user/:userId/addresses/:addressId/edit', checkLoggedIn, async (req, res) => {
+    const { addressId } = req.params;
+    const addressInfo = req.body;
+
+    await AddrQ.updateAddress(addressId, addressInfo).then((_) => {
+        return res.sendStatus(200);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(400);
+    })
+})
+
+router.post('/api/user/:userId/addresses/delete', checkLoggedIn, async (req, res) => {
+    const { toDelete } = req.body;
+
+    await AddrQ.deleteAddress(toDelete)
+        .then((_) => {
+            return res.status(200).send("Address successfully deleted");
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).send(`An error occurred while trying to delete address ${toDelete}`);
+        })
+})
+
+router.get('/api/user/:userId/addresses/:pageNum', checkLoggedIn, async (req, res) => {
+    const { userId, pageNum } = req.params;
+    const offset = ( pageNum - 1 ) * 6; // 6 as opposed to defaultPerPage, to display fewer per page
+    let paginationData = {};
+
+    await AddrQ.getPaginatedUserAddress(userId, 6, offset)
+        .then(([addresses, total]) => {
+            paginationData.currentPage = Number(pageNum);
+            paginationData.lastPage = Math.ceil(total.rows[0].total / 6);
+            paginationData.totalItems = Number(total.rows[0].total);
+            res.json({ addresses, paginationData });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.sendStatus(400);
         })
 })
 

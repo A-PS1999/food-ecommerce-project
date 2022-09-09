@@ -5,6 +5,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import Modal from "../../components/Modal/Modal";
 import AddCategoryForm from '../../components/AddCategoryForm/AddCategoryForm';
 import convertCatId from '../../utils/convertCatId';
+import { handleDelete } from "../../utils/handleDelete";
 import './CategoryManagement.scss';
 
 export default function CategoryManagement({ BASE_URL }) {
@@ -36,23 +37,6 @@ export default function CategoryManagement({ BASE_URL }) {
         }
     }, [fetchState])
 
-    const handleDeleteCategory = async (id) => {
-        if (window.confirm(`Are you sure you want to delete product ${id}?`)) {
-            try {
-                await callFetch(`${BASE_URL}/admin/products/delete`, {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ toDelete: id })
-                })
-                window.location.reload();
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    }
-
     return (
         <>
             <Modal isOpen={addCatOpen} toggleModal={toggleCatModal}>
@@ -78,7 +62,12 @@ export default function CategoryManagement({ BASE_URL }) {
                                         <div className="category__infobox__parent">Parent Category: {convertCatId(category.parent_id)}</div>
                                     }
                                     <div>
-                                        <button onClick={() => handleDeleteCategory(category.id)} className="category__infobox__del-btn">
+                                        <button className="category__infobox__del-btn" onClick={() => handleDelete({
+                                            id: category.id,
+                                            route: `${BASE_URL}/admin/products/delete`,
+                                            fetchFunc: callFetch,
+                                            message: `Are you sure you want to delete product ${category.id}?`
+                                        })}>
                                             Delete
                                         </button>
                                     </div>

@@ -1,0 +1,48 @@
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
+
+.address-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &__input {
+        @include mix.form-input;
+        margin-bottom: 1rem;
+
+        @media only screen and (min-width: 769px) {
+            margin-bottom: 1.2rem;
+        }
+    }
+    
+    &__label {
+        font-size: 1.2rem;
+
+        @media only screen and (min-width: 769px) {
+            font-size: 1.4rem;
+            padding-left: 10%;
+            margin-bottom: 0.3rem;
+        }
+    }
+
+    &__select {
+        margin-bottom: 1rem;
+        
+        @media only screen and (min-width: 769px) {
+            align-self: center;
+            min-width: 75%;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__submit-btn {
+        @include mix.add-btn;
+        background-size: 400% 400%;
+        margin-top: 1rem;
+
+        &:hover,
+        &:focus {
+            animation: gradientShift 1s ease;
+        }
+    }
+}

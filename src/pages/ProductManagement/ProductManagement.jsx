@@ -6,6 +6,7 @@ import Modal from '../../components/Modal/Modal';
 import AddProductForm from '../../components/AddProductForm/AddProductForm';
 import convertPrice from '../../utils/convertPrice';
 import convertCatId from '../../utils/convertCatId';
+import { handleDelete } from '../../utils/handleDelete';
 import './ProductManagement.scss';
 
 export default function ProductManagement({ BASE_URL }) {
@@ -37,24 +38,6 @@ export default function ProductManagement({ BASE_URL }) {
         }
     }, [fetchState])
 
-    const handleDeleteProduct = async (id) => {
-        if (window.confirm(`Are you sure you want to delete product ${id}?`)) {
-            try {
-                await callFetch(`${BASE_URL}/admin/products/delete`, {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ toDelete: id })
-                })
-                let updatedProducts = products.filter((product) => product.id !== id);
-                setProducts(updatedProducts);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    }
-
     return (
         <>
             <Modal isOpen={isOpen} toggleModal={toggleModal}>
@@ -83,7 +66,16 @@ export default function ProductManagement({ BASE_URL }) {
                                     <div className='product__infobox__price'>{convertPrice(product.price)}</div>
                                     <div className='product__infobox__category'>{convertCatId(product.category_id)}</div>
                                     <div>
-                                        <button onClick={() => handleDeleteProduct(product.id)} className='product__infobox__del-btn'>Delete</button>
+                                        <button className='product__infobox__del-btn' onClick={() => handleDelete({
+                                            id: product.id,
+                                            route: `${BASE_URL}/admin/products/delete`,
+                                            fetchFunc: callFetch,
+                                            message: `Are you sure you want to delete product ${product.id}?`,
+                                            stateFunc: setProducts,
+                                            state: products
+                                        })}>
+                                            Delete
+                                        </button>
                                     </div>
                                     <p className='product__infobox__description'>{product.description}</p>
                                 </div>
