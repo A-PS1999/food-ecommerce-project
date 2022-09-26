@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import useFetch from '../../hooks/useFetch';
+import NavbarMobileMenu from "./NavbarMobileMenu";
 import { useCartStore } from "../../hooks/useCartStore";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider";
@@ -86,29 +87,14 @@ export default function Navbar({ BASE_URL }) {
                                 </div>
                             </>
                         )}
+
                     </div>
                     <Link to="/cart" className="navbar__link-group__cart-container">
                         <span className="navbar__link-group__cart-container__item-num">{numCartItems}</span>
                         <img src="/basket.svg" alt="Shopping basket" className="navbar__link-group__cart-container__basket" />
                     </Link>
                 </div>
-                <div className="navbar__mobile-menu">
-                    <input name="menu-toggle" type="radio" id="navbar-close-burg" className="navbar__mobile-menu__toggle"/>
-                    <label htmlFor="navbar-close-burg" className="navbar__mobile-menu__close">✖</label>
-                    <Link to="/admin" className="navbar__mobile-menu__admin-container">
-                        <img src="/crown.svg" alt="Crown" className="navbar__mobile-menu__admin-container__crown" />
-                        Admin
-                    </Link>
-                    <div className="navbar__mobile-menu__button-group">
-                        <Link to="/register" className="navbar__mobile-menu__button-group__button">Register</Link>
-                        {!loggedIn ? <Link to="/log-in" className="navbar__mobile-menu__button-group__button">Log In</Link>
-                        : <Link to="/" onClick={() => handleLogOut()} className="navbar__mobile-menu__button-group__button">Log Out</Link>
-                        }
-                    </div>
-                    <div className="navbar__mobile-menu__cart-container">
-                        <img src="/basket.svg" alt="Shopping basket" className="navbar__mobile-menu__cart-container__basket" />
-                    </div>
-                </div>
+                <NavbarMobileMenu props={{ loggedIn, handleLogOut, userData, numCartItems }} />
             </nav>
         </>
     )

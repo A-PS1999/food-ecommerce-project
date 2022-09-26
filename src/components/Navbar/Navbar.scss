@@ -41,10 +41,11 @@
         transform: translateX(100%);
         display: grid;
         grid-template-columns:  1fr 1fr 1fr 1fr;
-        grid-template-rows: 10% 15% 10% 1fr;
+        grid-template-rows: 10% 12% 10% 1fr;
         grid-template-areas: "admin admin close close"
                              "btn btn btn btn"
-                             ". cart cart .";
+                             ". cart cart ."
+                             "menu menu menu menu";
 
         &__toggle {
             display: none;
@@ -96,9 +97,42 @@
             justify-content: center;
             grid-area: cart;
 
+            &__item-num {
+                @include mix.admin-item-id;
+                position: absolute;
+                right: 4.5rem;
+                top: 26%;
+                color: var.$colour-white;
+                background-color: var.$dark-blue;
+                z-index: 4000;
+            }
+
             &__basket {
                 width: 40%;
                 filter: grayscale(1) invert(1);
+            }
+        }
+
+        &__categories {
+            grid-area: menu;
+            list-style: none;
+            text-align: center;
+
+            &__title {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem;
+                text-decoration: underline;
+                color: var.$colour-white;
+            }
+
+            &__li {
+                font-size: 1.2rem;
+                padding: 0.5rem 0;
+                background-color: var.$colour-white;
+
+                &:not(:last-child) {
+                    margin-bottom: 0.8rem;
+                }
             }
         }
 
