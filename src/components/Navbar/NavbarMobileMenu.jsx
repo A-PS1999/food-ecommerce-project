@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import RecursiveMenu from "./RecursiveMenu";
 import './Navbar.scss';
 
-export default function NavbarMobileMenu({props}) {
+export default function NavbarMobileMenu({ props }) {
 
-    const { loggedIn, handleLogOut, userData, numCartItems } = props
+    const { loggedIn, handleLogOut, userData, numCartItems, menuCategories } = props
 
     return (
         <div className="navbar__mobile-menu">
@@ -35,17 +36,10 @@ export default function NavbarMobileMenu({props}) {
                 <span className="navbar__mobile-menu__cart-container__item-num">{numCartItems}</span>
                 <img src="/basket.svg" alt="Shopping basket" className="navbar__mobile-menu__cart-container__basket" />
             </Link>
-            <ul className="navbar__mobile-menu__categories">
-                <div className="navbar__mobile-menu__categories__title">Categories</div>
-                <li className="navbar__mobile-menu__categories__li">Seasonings</li>
-                <li className="navbar__mobile-menu__categories__li">Condiments</li>
-                <li className="navbar__mobile-menu__categories__li">Grains & Pulses</li>
-                <li className="navbar__mobile-menu__categories__li">Snacks & Sweets</li>
-                <li className="navbar__mobile-menu__categories__li">Pasta & Noodles</li>
-                <li className="navbar__mobile-menu__categories__li">Preserved Foods</li>
-                <li className="navbar__mobile-menu__categories__li">Tea, Coffee & Hot Drinks</li>
-                <li className="navbar__mobile-menu__categories__li">Soft Drinks</li>
-            </ul>
+            <div className="navbar__mobile-menu__categories">
+                <h2 className="navbar__mobile-menu__categories__title">Categories</h2>
+                <RecursiveMenu categories={menuCategories} />
+            </div>
         </div>
     )
 }

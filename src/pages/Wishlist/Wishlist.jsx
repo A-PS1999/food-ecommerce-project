@@ -38,7 +38,9 @@ export default function Wishlist({ BASE_URL }) {
             }
         }
 
-        fetchWishlist();
+        if (userId) {
+            fetchWishlist();
+        }
     }, [pageNum]);
 
     useEffect(() => {
