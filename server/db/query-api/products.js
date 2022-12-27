@@ -67,6 +67,16 @@ const getProductNameAndImage = db => async (productId) => {
         .where("products.id", productId);
 }
 
+const getProductsByCategory = db => async (categoryId, perPage, offset) => {
+    const productsByCat = db("products").select('products.*', 'product_images.image_url')
+        .leftJoin("product_images", "products.id", "product_images.product_id")
+        .where("products.category_id", categoryId)
+        .limit(perPage)
+        .offset(offset)
+    const total = db("products").select(db.raw('count(id) as total')).where('category_id', categoryId);
+    return Promise.all([productsByCat, total]);
+}
+
 // NOTE: Below query can be very slow on large datasets, but for my purposes works fine.
 const getRandomProducts = db => async (limit) => {
     return db("products").select('products.id', 'product_images.image_url')
@@ -97,6 +107,7 @@ module.exports = db => ({
     addProduct: addProduct(db),
     getProduct: getProduct(db),
     getProductNameAndImage: getProductNameAndImage(db),
+    getProductsByCategory: getProductsByCategory(db),
     getRandomProducts: getRandomProducts(db),
     getProductSample: getProductSample(db),
 })

@@ -1,0 +1,45 @@
+@use '../../sass/abstracts/variables' as var;
+
+.flipcard {
+    -moz-perspective: 150rem;
+    perspective: 150rem;
+    min-width: 20rem;
+
+    &__inner {
+        display: grid;
+        transition: all .4s ease-out;
+        transform-style: preserve-3d;
+        border: 1px solid var.$dark-grey;
+        border-radius: 0.5rem;
+    }
+
+    &__side {
+        width: 100%;
+        backface-visibility: hidden;
+        grid-area: 1/1;
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+
+        &__img {
+            max-width: 90%;
+            align-self: center;
+        }
+
+        &__heading {
+            font-size: 1.8rem;
+        }
+
+        &__text {
+            font-size: var.$default-font-size;
+        }
+
+        &--back {
+            transform: rotateY(180deg);
+        }
+    }
+
+    &:hover &__inner {
+        transform: rotateY(-180deg);
+    }
+}

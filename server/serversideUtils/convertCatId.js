@@ -1,4 +1,4 @@
-export default function convertCatId(id) {
+function convertCatId(id) {
     switch (id) {
         case 1: return 'Food'; 
         case 2: return 'Drink'; 
@@ -28,3 +28,5 @@ export default function convertCatId(id) {
         case 26: return "Jars & Pickles"; 
     }
 }
+
+module.exports = { convertCatId };

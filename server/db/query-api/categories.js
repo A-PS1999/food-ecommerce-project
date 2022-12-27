@@ -3,11 +3,12 @@ const categoriesNoPagination = db => () => {
 }
 
 const getCategories = db => (offset, perPage) => {
-    const categories = db("product_categories").where("product_categories.id", ">", 2)
-        .select('pc.id', 'pc.cat_name', 'pc.parent_id', db.raw('ARRAY_AGG(ch.id) as children'))
+    const categories = db("product_categories")
+        .select('pc.id', 'pc.cat_name', 'pc.parent_id', db.raw('ARRAY_AGG(ch.cat_name) as children'))
         .from({ pc: 'product_categories' })
         .leftJoin({ ch: 'product_categories' }, 'ch.parent_id', '=', 'pc.id')
         .groupBy('pc.id')
+        .orderBy('pc.id', 'asc')
         .limit(perPage)
         .offset(offset)
     const total = db("product_categories").select(db.raw("count(id) as total"))

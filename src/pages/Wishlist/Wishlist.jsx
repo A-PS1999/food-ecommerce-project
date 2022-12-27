@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import convertPrice from '../../utils/convertPrice';
-import convertCatId from '../../utils/convertCatId';
 import useFetch from "../../hooks/useFetch";
 import { useCartStore } from "../../hooks/useCartStore";
 import { AuthContext } from "../../utils/AuthContextProvider.jsx";
@@ -48,7 +46,6 @@ export default function Wishlist({ BASE_URL }) {
             setWishlist(fetchState.data.wishlist);
             setPaginationData(fetchState.data.paginationData);
         }
-        console.log(fetchState.data.wishlist)
     }, [fetchState]);
 
     const handleAddToCart = (id) => {
@@ -105,8 +102,8 @@ export default function Wishlist({ BASE_URL }) {
                                     </Link>
                                     <div className="wishlist__list__item__infobox">
                                         <Link to={`/products/${item.product_id}`} className="wishlist__list__item__infobox__name">{item.prod_name}</Link>
-                                        <p className="wishlist__list__item__infobox__price">{convertPrice(item.price)}</p>
-                                        <p className="wishlist__list__item__infobox__category">Category: {convertCatId(item.category_id)}</p>
+                                        <p className="wishlist__list__item__infobox__price">{item.price}</p>
+                                        <p className="wishlist__list__item__infobox__category">Category: {item.category_id}</p>
                                     </div>
                                     <div className="wishlist__list__item__btn-group">
                                         <button className="wishlist__list__item__btn-group__cart" onClick={() => handleAddToCart(item.product_id)}>

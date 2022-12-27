@@ -4,7 +4,6 @@ import useModal from "../../hooks/useModal";
 import Pagination from "../../components/Pagination/Pagination";
 import Modal from "../../components/Modal/Modal";
 import AddCategoryForm from '../../components/AddCategoryForm/AddCategoryForm';
-import convertCatId from '../../utils/convertCatId';
 import { handleDelete } from "../../utils/handleDelete";
 import './CategoryManagement.scss';
 
@@ -59,14 +58,14 @@ export default function CategoryManagement({ BASE_URL }) {
                                 </summary>
                                 <div className="category__infobox">
                                     {category.parent_id != null &&
-                                        <div className="category__infobox__parent">Parent Category: {convertCatId(category.parent_id)}</div>
+                                        <div className="category__infobox__parent">Parent Category: {category.parent_id}</div>
                                     }
                                     <div>
                                         <button className="category__infobox__del-btn" onClick={() => handleDelete({
                                             id: category.id,
-                                            route: `${BASE_URL}/admin/products/delete`,
+                                            route: `${BASE_URL}/admin/categories/delete`,
                                             fetchFunc: callFetch,
-                                            message: `Are you sure you want to delete product ${category.id}?`
+                                            message: `Are you sure you want to delete category ${category.id}?`
                                         })}>
                                             Delete
                                         </button>
@@ -78,7 +77,7 @@ export default function CategoryManagement({ BASE_URL }) {
                                                 {category.children.map((child, index) => {
                                                     return (
                                                         <div className="category__infobox__child-container__child" key={index}>
-                                                            {convertCatId(child)}
+                                                            {child}
                                                         </div>
                                                     )
                                                 })}

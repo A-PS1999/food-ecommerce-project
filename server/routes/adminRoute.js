@@ -5,6 +5,8 @@ const multer = require('multer');
 const upload = multer();
 
 const { UserQ, ProdQ, CatQ } = require('../db/query-api');
+const { convertPrice } = require('../serversideUtils/convertPrice');
+const { convertCatId } = require('../serversideUtils/convertCatId');
 
 const defaultPerPage = 15;
 
@@ -56,6 +58,10 @@ router.get('/api/admin/products/:pageNum', checkLoggedIn, checkAdmin, async (req
 
     await ProdQ.getAllProducts(defaultPerPage, offset)
         .then(([products, total]) => {
+            products.forEach(product => {
+                product.price = convertPrice(product.price);
+                product.category_id = convertCatId(product.category_id);
+            })
             paginationData.currentPage = Number(pageNum);
             paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);
@@ -95,6 +101,9 @@ router.get('/api/admin/categories/:pageNum', checkLoggedIn, checkAdmin, async (r
 
     await CatQ.getCategories(offset, defaultPerPage)
         .then(([categories, total]) => {
+            for (let category of categories) {
+                category.parent_id = convertCatId(category.parent_id);
+            }
             paginationData.currentPage = Number(pageNum);
             paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);

@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
+import CategoryPage from './pages/CategoryPage/CategoryPage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import ProductReviewsPage from './pages/ProductReviewsPage/ProductReviewsPage';
 import AddReviewPage from './pages/AddReviewPage/AddReviewPage';
@@ -39,8 +40,9 @@ function App() {
           <Route path="/products/:productId">
             <Route index={true} element={<ProductPage BASE_URL={BASE_URL} />} />
             <Route path="add-review" element={<AddReviewPage BASE_URL={BASE_URL} />} />
-            <Route path="reviews" element={<ProductReviewsPage BASE_URL={BASE_URL}/>} />
+            <Route path="reviews" element={<ProductReviewsPage BASE_URL={BASE_URL} />} />
           </Route>
+          <Route path="/categories/:categoryId" element={<CategoryPage BASE_URL={BASE_URL} />} />
           <Route path="/user/:userId">
             <Route index={true} element={<UserHub />} />
             <Route path="wishlist" element={<Wishlist BASE_URL={BASE_URL} />} />
