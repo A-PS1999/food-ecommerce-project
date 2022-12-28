@@ -25,11 +25,13 @@ export default function NavbarMainMenu({ categories }) {
 
     return (
         <>
-            <button className="navbar__span-burger" type="button" title="Hamburger menu" onClick={() => setMenuOpen(!menuOpen)}>
-                <span className={menuOpen ? "navbar__span-burger__span--open" : "navbar__span-burger__span--closed"} />
-                <span className={menuOpen ? "navbar__span-burger__span--open" : "navbar__span-burger__span--closed"} />
-                <span className={menuOpen ? "navbar__span-burger__span--open" : "navbar__span-burger__span--closed"} />
-            </button>
+            <div className="navbar__span-burger__outer">
+                <button className="navbar__span-burger" type="button" title="Hamburger menu" onClick={() => setMenuOpen(!menuOpen)}>
+                    <span className={menuOpen ? "navbar__span-burger__span--open" : "navbar__span-burger__span--closed"} />
+                    <span className={menuOpen ? "navbar__span-burger__span--open" : "navbar__span-burger__span--closed"} />
+                    <span className={menuOpen ? "navbar__span-burger__span--open" : "navbar__span-burger__span--closed"} />
+                </button>
+            </div>
             <div className={menuOpen ? "navbar__main-menu__backing--open" : "navbar__main-menu__backing"}>
                 <div className="navbar__main-menu" style={{ transform: menuOpen ? "translateX(0)" : "translateX(-100%)" }}>
                     <h2 className="navbar__main-menu__heading">Categories</h2>

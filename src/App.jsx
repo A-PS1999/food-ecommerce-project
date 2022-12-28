@@ -42,7 +42,7 @@ function App() {
             <Route path="add-review" element={<AddReviewPage BASE_URL={BASE_URL} />} />
             <Route path="reviews" element={<ProductReviewsPage BASE_URL={BASE_URL} />} />
           </Route>
-          <Route path="/categories/:categoryId" element={<CategoryPage BASE_URL={BASE_URL} />} />
+          <Route path="/categories/:categoryName/:categoryId" element={<CategoryPage BASE_URL={BASE_URL} />} />
           <Route path="/user/:userId">
             <Route index={true} element={<UserHub />} />
             <Route path="wishlist" element={<Wishlist BASE_URL={BASE_URL} />} />

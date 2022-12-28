@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import './ReadMoreComponent.scss';
 
-export default function ReadMoreComponent({ children, 
+export default function ReadMoreComponent({ children,
+    expandable=true, 
     charLimit=200, 
     readMoreText="Read more", 
     readLessText="Read less",
@@ -26,9 +27,15 @@ export default function ReadMoreComponent({ children,
 
     return (
         <>
-            <p className={textClassName}>
-                {showMore ? children : shortenedText} {showMore ? <ReadLess /> : <ReadMore />}
-            </p>
+            {expandable ? 
+                <p className={textClassName}>
+                    {showMore ? children : shortenedText} {showMore ? <ReadLess /> : <ReadMore />}
+                </p>
+                :
+                <p className={textClassName}>
+                    {showMore ? children : shortenedText}
+                </p>
+            }
         </>
     )
 }

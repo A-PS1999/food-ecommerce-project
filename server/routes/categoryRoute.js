@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const { convertPrice } = require('../serversideUtils/convertPrice');
 const { CatQ } = require('../db/query-api');
 const { ProdQ } = require('../db/query-api');
 
@@ -19,6 +19,9 @@ router.get('/api/categories/:catId/:pageNum', async (req, res) => {
     let paginationData = {};
     
     const [prodsByCat, total] = await ProdQ.getProductsByCategory(catId, 60, offset);
+    prodsByCat.forEach((product) => {
+        product.price = convertPrice(product.price);
+    })
 
     try {
         paginationData.currentPage = Number(pageNum);

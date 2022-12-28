@@ -24,10 +24,10 @@ export default function FlipCard({ item, cartFunc }) {
                             {item.prod_name}
                         </div>
                         <b className="flipcard__side__text">{item.price}</b>
-                        <ReadMoreComponent textClassName="flipcard__side__text">
+                        <ReadMoreComponent expandable={false} textClassName="flipcard__side__text">
                             {item.description}
                         </ReadMoreComponent>
-                        <button onClick={() => handleAddOneToCart()}>
+                        <button onClick={() => handleAddOneToCart()} className="flipcard__side__button">
                             Add to basket
                         </button>
                     </div>

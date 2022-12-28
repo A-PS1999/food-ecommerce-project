@@ -1,13 +1,17 @@
 @use '../../sass/abstracts/variables' as var;
+@use '../../sass/abstracts/mixins' as mix;
+@use '../../sass/base/animations';
 
 .flipcard {
     -moz-perspective: 150rem;
     perspective: 150rem;
-    min-width: 20rem;
+    min-width: 25rem;
+    height: 100%;
 
     &__inner {
+        height: inherit;
         display: grid;
-        transition: all .4s ease-out;
+        transition: all .25s cubic-bezier(0.54, -0.13, 0.68, 1.26);
         transform-style: preserve-3d;
         border: 1px solid var.$dark-grey;
         border-radius: 0.5rem;
@@ -23,6 +27,7 @@
 
         &__img {
             max-width: 90%;
+            max-height: 300px;
             align-self: center;
         }
 
@@ -32,6 +37,18 @@
 
         &__text {
             font-size: var.$default-font-size;
+            margin-bottom: 1.3rem;
+        }
+
+        &__button {
+            @include mix.add-btn;
+            background: linear-gradient(270deg, var.$light-orange, var.$dark-orange);
+            background-size: 400% 400%;
+
+            &:hover,
+            &:focus {
+                animation: gradientShift 1s ease;
+            }
         }
 
         &--back {

@@ -9,7 +9,7 @@ export default function MenuChild({ name, catId, children }) {
                 {(children && children.length > 0) && (
                     <img src="/chevron-right.svg" alt="Right chevron" className="recursive-menu__menu-item__chevron"/>
                 )}
-                <Link to={`/categories/${catId}`} className="recursive-menu__menu-item__heading__title">{name}</Link>
+                <Link to={`/categories/${name}/${catId}`} className="recursive-menu__menu-item__heading__title">{name}</Link>
             </div>
             {children && (
                 <div className="recursive-menu__menu-item__children">

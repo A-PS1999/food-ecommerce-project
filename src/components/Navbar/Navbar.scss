@@ -43,7 +43,7 @@
             min-width: 5%;
             min-height: 5%;
             margin-right: 0;
-            margin-left: 48%;
+            margin-left: 12%;
         }
     }
 
@@ -423,7 +423,6 @@
 
         @media only screen and (min-width: 769px) {
             position: absolute;
-            left: 2%;
             display: flex;
             flex-direction: column;
             width: 4rem;
@@ -433,6 +432,13 @@
             cursor: pointer;
             justify-content: space-around;
             z-index: 10;
+
+            &__outer {
+                position: relative;
+                width: 4rem;
+                height: 4rem;
+                left: 2%;
+            }
 
             &__span {
                 width: 4rem;

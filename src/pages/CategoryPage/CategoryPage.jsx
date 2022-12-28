@@ -13,7 +13,7 @@ export default function ResultsPage({ BASE_URL }) {
     const [pageNum, setPageNum] = useState(1);
     const [categoryProds, setCategoryProds] = useState(null);
     const [paginationData, setPaginationData] = useState(null);
-    const { categoryId } = useParams();
+    const { categoryName, categoryId } = useParams();
     const { callFetch, fetchState } = useFetch();
     const addItem = useCartStore(addItemSelector);
 
@@ -29,7 +29,7 @@ export default function ResultsPage({ BASE_URL }) {
         }
 
         fetchResults();
-    }, [pageNum])
+    }, [pageNum, categoryId])
 
     useEffect(() => {
         if (fetchState.data.categoryProds) {
@@ -40,6 +40,9 @@ export default function ResultsPage({ BASE_URL }) {
 
     return (
         <>
+            <header className='category-prods-header'>
+                {categoryName}
+            </header>
             <div className='category-prods'>
                 <section className="category-prods__container">
                     {categoryProds && categoryProds.length > 0 ? categoryProds.map((categoryProd) => {

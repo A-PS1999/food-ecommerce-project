@@ -68,9 +68,17 @@ const getProductNameAndImage = db => async (productId) => {
 }
 
 const getProductsByCategory = db => async (categoryId, perPage, offset) => {
+    const childCategories = await db('product_categories').select('pc.id', db.raw('ARRAY_AGG(ch.id) as children'))
+        .from({ pc: 'product_categories' })
+        .leftJoin({ ch: 'product_categories' }, 'ch.parent_id', '=', 'pc.id')
+        .where('pc.id', categoryId)
+        .groupBy('pc.id')
     const productsByCat = db("products").select('products.*', 'product_images.image_url')
         .leftJoin("product_images", "products.id", "product_images.product_id")
         .where("products.category_id", categoryId)
+        .orWhere((builder) => {
+            builder.whereIn("products.category_id", childCategories[0].children)
+        })
         .limit(perPage)
         .offset(offset)
     const total = db("products").select(db.raw('count(id) as total')).where('category_id', categoryId);
