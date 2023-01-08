@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const { Readable } = require('stream');
+const { convertSortSelect } = require('../../serversideUtils/convertSortSelect');
 const db = require('../db');
 
 const getAllProducts = db => async (perPage, offset) => {
@@ -67,21 +68,35 @@ const getProductNameAndImage = db => async (productId) => {
         .where("products.id", productId);
 }
 
-const getProductsByCategory = db => async (categoryId, perPage, offset) => {
-    const childCategories = await db('product_categories').select('pc.id', db.raw('ARRAY_AGG(ch.id) as children'))
-        .from({ pc: 'product_categories' })
-        .leftJoin({ ch: 'product_categories' }, 'ch.parent_id', '=', 'pc.id')
-        .where('pc.id', categoryId)
-        .groupBy('pc.id')
+const getProductsByCategory = db => async (categoryId, perPage, offset, sortSelected) => {
+    const childCategories = await db.raw(
+        `WITH RECURSIVE children AS (
+            SELECT id
+            FROM product_categories
+            WHERE id = ${categoryId}
+            
+            UNION ALL
+
+            SELECT child.id
+            FROM product_categories child
+            JOIN children c
+            ON c.id = child.parent_id
+        )
+        SELECT array_agg(id) AS res
+        FROM children 
+        `
+    );
     const productsByCat = db("products").select('products.*', 'product_images.image_url')
         .leftJoin("product_images", "products.id", "product_images.product_id")
-        .where("products.category_id", categoryId)
-        .orWhere((builder) => {
-            builder.whereIn("products.category_id", childCategories[0].children)
+        .where((builder) => {
+            builder.whereIn("products.category_id", childCategories.rows[0].res)
         })
         .limit(perPage)
         .offset(offset)
-    const total = db("products").select(db.raw('count(id) as total')).where('category_id', categoryId);
+        .orderByRaw(convertSortSelect(sortSelected))
+    const total = db("products").select(db.raw('count(id) as total')).where((builder) => { 
+        builder.whereIn('category_id', childCategories.rows[0].res) 
+    });
     return Promise.all([productsByCat, total]);
 }
 

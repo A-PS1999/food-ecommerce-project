@@ -13,12 +13,12 @@ router.get("/api/categories/get-full-tree", async (req, res) => {
     return res.json({ categories })
 })
 
-router.get('/api/categories/:catId/:pageNum', async (req, res) => {
-    const { catId, pageNum } = req.params;
+router.get('/api/categories/:catId/:pageNum/order=:sortSelected', async (req, res) => {
+    const { catId, pageNum, sortSelected } = req.params;
     const offset = ( pageNum - 1 ) * 60;
     let paginationData = {};
     
-    const [prodsByCat, total] = await ProdQ.getProductsByCategory(catId, 60, offset);
+    const [prodsByCat, total] = await ProdQ.getProductsByCategory(catId, 60, offset, sortSelected);
     prodsByCat.forEach((product) => {
         product.price = convertPrice(product.price);
     })

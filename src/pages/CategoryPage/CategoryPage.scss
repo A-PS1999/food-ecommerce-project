@@ -12,16 +12,58 @@
     max-width: 85%;
     margin: 0 auto;
 
+    &__sort {
+        margin-bottom: 2rem;
+
+        &__label {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+
+            @media only screen and (min-width: 769px) {
+                font-size: var.$default-font-size;
+                margin-right: 1rem;
+            }
+        }
+
+        &__select-wrap {
+            width: 100%;
+            display: inline;
+            border: 1px solid var.$dark-orange;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.5rem;
+
+            &::after {
+                content: "";
+                background-color: var.$dark-orange;
+                width: 0.8rem;
+                height: 0.5rem;
+                display: inline-block;
+                clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+            }
+        }
+
+        &__select {
+            appearance: none;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            border-width: 0;
+            font-size: 1.5rem;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+    }
+
     &__container {
         display: flex;
         flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
         
         @media only screen and (min-width: 769px) {
             display: grid;
             justify-items: center;
             grid-template-columns: repeat(4, 25rem);
-            gap: 1.5rem;
-            margin-bottom: 1rem;
         }
     }
 
