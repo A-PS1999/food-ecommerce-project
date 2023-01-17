@@ -14,6 +14,12 @@ export default function Pagination({ pageData, changePageNum }) {
         changePageNum(pageNum);
     }, [pageNum]);
 
+    useEffect(() => {
+        if (pageData && pageData.currentPage == 1) {
+            setPageNum(1);
+        }
+    }, [pageData])
+
     return (
         <>
             {pageData && pageData.lastPage > 1 ? (

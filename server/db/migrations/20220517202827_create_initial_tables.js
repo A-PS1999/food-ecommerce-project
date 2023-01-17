@@ -113,5 +113,7 @@ exports.down = function(knex) {
         .dropTable("addresses")
         .dropTable("sessions")
         .dropTable("users")
+        .raw(`DROP TYPE order_status`)
+        .raw(`DROP TYPE shipping_status`)
   )
 };

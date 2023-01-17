@@ -4,8 +4,6 @@ import useModal from '../../hooks/useModal';
 import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
 import AddProductForm from '../../components/AddProductForm/AddProductForm';
-import convertPrice from '../../utils/convertPrice';
-import convertCatId from '../../utils/convertCatId';
 import { handleDelete } from '../../utils/handleDelete';
 import './ProductManagement.scss';
 
@@ -63,8 +61,8 @@ export default function ProductManagement({ BASE_URL }) {
                                 </summary>
                                 <div className='product__infobox'>
                                     <img src={product.image_url} className="product__infobox__img" />
-                                    <div className='product__infobox__price'>{convertPrice(product.price)}</div>
-                                    <div className='product__infobox__category'>{convertCatId(product.category_id)}</div>
+                                    <div className='product__infobox__price'>{product.price}</div>
+                                    <div className='product__infobox__category'>{product.category_id}</div>
                                     <div>
                                         <button className='product__infobox__del-btn' onClick={() => handleDelete({
                                             id: product.id,

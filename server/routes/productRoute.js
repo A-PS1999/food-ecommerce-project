@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const { convertPrice } = require('../serversideUtils/convertPrice');
 const { ProdQ, RevQ } = require('../db/query-api');
 
 const defaultPerPage = 15;
@@ -8,6 +8,7 @@ router.get('/api/products/:id', async (req, res) => {
     const { id } = req.params;
     await ProdQ.getProduct(id)
         .then((product) => {
+            product[0].price = convertPrice(product[0].price);
             return res.json({ product: product[0] })
         })
         .catch((error) => {

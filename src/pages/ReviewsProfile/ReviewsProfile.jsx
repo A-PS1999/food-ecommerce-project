@@ -96,7 +96,7 @@ export default function ReviewsProfile({ BASE_URL }) {
                         </React.Fragment>
                     )
                 }) : <>
-                    <div>
+                    <div className="no-reviews">
                         Looks like you haven't written any reviews.
                     </div>
                 </>

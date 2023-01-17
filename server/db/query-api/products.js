@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const { Readable } = require('stream');
+const { convertSortSelect } = require('../../serversideUtils/convertSortSelect');
 const db = require('../db');
 
 const getAllProducts = db => async (perPage, offset) => {
@@ -67,6 +68,38 @@ const getProductNameAndImage = db => async (productId) => {
         .where("products.id", productId);
 }
 
+const getProductsByCategory = db => async (categoryId, perPage, offset, sortSelected) => {
+    const childCategories = await db.raw(
+        `WITH RECURSIVE children AS (
+            SELECT id, cat_name
+            FROM product_categories
+            WHERE id = ${categoryId}
+            
+            UNION ALL
+
+            SELECT child.id, child.cat_name
+            FROM product_categories child
+            JOIN children c
+            ON c.id = child.parent_id
+        )
+        SELECT array_agg(id) AS ids, array_agg(cat_name) as names
+        FROM children 
+        `
+    );
+    const productsByCat = db("products").select('products.*', 'product_images.image_url')
+        .leftJoin("product_images", "products.id", "product_images.product_id")
+        .where((builder) => {
+            builder.whereIn("products.category_id", childCategories.rows[0].ids)
+        })
+        .limit(perPage)
+        .offset(offset)
+        .orderByRaw(convertSortSelect(sortSelected))
+    const total = db("products").select(db.raw('count(id) as total')).where((builder) => { 
+        builder.whereIn('category_id', childCategories.rows[0].ids) 
+    });
+    return Promise.all([productsByCat, childCategories.rows[0], total]);
+}
+
 // NOTE: Below query can be very slow on large datasets, but for my purposes works fine.
 const getRandomProducts = db => async (limit) => {
     return db("products").select('products.id', 'product_images.image_url')
@@ -97,6 +130,7 @@ module.exports = db => ({
     addProduct: addProduct(db),
     getProduct: getProduct(db),
     getProductNameAndImage: getProductNameAndImage(db),
+    getProductsByCategory: getProductsByCategory(db),
     getRandomProducts: getRandomProducts(db),
     getProductSample: getProductSample(db),
 })

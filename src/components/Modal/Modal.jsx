@@ -10,9 +10,11 @@ export default function Modal({ children, isOpen, toggleModal }) {
                 toggleModal();
             }
         }
-        if(isOpen) {
+        if (isOpen) {
             window.addEventListener('click', handleClick)
         }
+
+        return () => window.removeEventListener('click', handleClick);
     }, [isOpen])
 
     return createPortal(

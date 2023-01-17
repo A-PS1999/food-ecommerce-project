@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const checkLoggedIn = require('./middleware/checkLoggedIn');
-
 const { WishQ, RevQ, AddrQ } = require('../db/query-api');
+const { convertPrice } = require('../serversideUtils/convertPrice');
+const { convertCatId } = require('../serversideUtils/convertCatId');
 
 const defaultPerPage = 15;
 
@@ -36,6 +37,10 @@ router.get('/api/user/:userId/wishlist/:pageNum', checkLoggedIn, async (req, res
 
     await WishQ.getPaginatedWishlist(userId, defaultPerPage, offset)
         .then(([wishlist, total]) => {
+            wishlist.forEach((item) => {
+                item.price = convertPrice(item.price);
+                item.category_id = convertCatId(item.category_id);
+            })
             paginationData.currentPage = Number(pageNum);
             paginationData.lastPage = Math.ceil(total[0].total / defaultPerPage);
             paginationData.totalItems = Number(total[0].total);

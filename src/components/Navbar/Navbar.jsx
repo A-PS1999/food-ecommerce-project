@@ -1,15 +1,18 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import useFetch from '../../hooks/useFetch';
+import NavbarMobileMenu from "./NavbarMobileMenu";
 import { useCartStore } from "../../hooks/useCartStore";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContextProvider";
 import './Navbar.scss';
+import NavbarMainMenu from "./NavbarMainMenu";
 
 const numItemsSelector = (state) => state.cart.length;
 
 export default function Navbar({ BASE_URL }) {
 
     const { callFetch, fetchState } = useFetch();
+    const [menuCategories, setMenuCategories] = useState(null);
     const numCartItems = useCartStore(numItemsSelector);
     const { loggedIn, setLoggedIn, setUserData, userData } = useContext(AuthContext);
 
@@ -23,14 +26,27 @@ export default function Navbar({ BASE_URL }) {
                 console.log(error);
             }
         }
+        const getCategories = async () => {
+            try {
+                await callFetch(`${BASE_URL}/categories/get-full-tree`, {
+                    method: 'get'
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
         checkSession();
+        getCategories();
     }, []);
 
     useEffect(() => {
-        if (!loggedIn && fetchState.status === 'success') {
+        if (!loggedIn && fetchState.data.auth) {
             setLoggedIn(true);
-            setUserData(fetchState.data);
+            setUserData(fetchState.data.auth);
+        }
+        if (fetchState.data.categories) {
+            setMenuCategories(fetchState.data.categories)
         }
     }, [fetchState]);
 
@@ -49,8 +65,9 @@ export default function Navbar({ BASE_URL }) {
     return (
         <>
             <nav className="navbar">
-                <Link to="/" className="navbar__link">
-                    <img src="/logo.svg" alt="WorldFoods" />
+                <NavbarMainMenu categories={menuCategories} />
+                <Link to="/" className="navbar__logo">
+                    <img src="/logo-concise.svg" alt="WorldFoods Logo" className="navbar__logo__img" />
                 </Link>
                 <input type="radio" name="menu-toggle" id="navbar-open-burg" className="navbar__toggle" />
                 <label htmlFor="navbar-open-burg" className="navbar__hamburger-container">
@@ -84,6 +101,7 @@ export default function Navbar({ BASE_URL }) {
                                     <Link to={`/user/${userData.id}`} className="navbar__dropdown-menu__link-group__link">Your User Hub</Link>
                                     <Link to={`/user/${userData.id}/wishlist`} className="navbar__dropdown-menu__link-group__link">Your Wishlist</Link>
                                 </div>
+                                <Link to={`/user/${userData.id}/orders`} className="navbar__dropdown-menu__orders-link">Your Orders</Link>
                             </>
                         )}
                     </div>
@@ -92,23 +110,7 @@ export default function Navbar({ BASE_URL }) {
                         <img src="/basket.svg" alt="Shopping basket" className="navbar__link-group__cart-container__basket" />
                     </Link>
                 </div>
-                <div className="navbar__mobile-menu">
-                    <input name="menu-toggle" type="radio" id="navbar-close-burg" className="navbar__mobile-menu__toggle"/>
-                    <label htmlFor="navbar-close-burg" className="navbar__mobile-menu__close">✖</label>
-                    <Link to="/admin" className="navbar__mobile-menu__admin-container">
-                        <img src="/crown.svg" alt="Crown" className="navbar__mobile-menu__admin-container__crown" />
-                        Admin
-                    </Link>
-                    <div className="navbar__mobile-menu__button-group">
-                        <Link to="/register" className="navbar__mobile-menu__button-group__button">Register</Link>
-                        {!loggedIn ? <Link to="/log-in" className="navbar__mobile-menu__button-group__button">Log In</Link>
-                        : <Link to="/" onClick={() => handleLogOut()} className="navbar__mobile-menu__button-group__button">Log Out</Link>
-                        }
-                    </div>
-                    <div className="navbar__mobile-menu__cart-container">
-                        <img src="/basket.svg" alt="Shopping basket" className="navbar__mobile-menu__cart-container__basket" />
-                    </div>
-                </div>
+                <NavbarMobileMenu props={{ loggedIn, handleLogOut, userData, numCartItems, menuCategories }} />
             </nav>
         </>
     )
