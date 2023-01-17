@@ -71,33 +71,33 @@ const getProductNameAndImage = db => async (productId) => {
 const getProductsByCategory = db => async (categoryId, perPage, offset, sortSelected) => {
     const childCategories = await db.raw(
         `WITH RECURSIVE children AS (
-            SELECT id
+            SELECT id, cat_name
             FROM product_categories
             WHERE id = ${categoryId}
             
             UNION ALL
 
-            SELECT child.id
+            SELECT child.id, child.cat_name
             FROM product_categories child
             JOIN children c
             ON c.id = child.parent_id
         )
-        SELECT array_agg(id) AS res
+        SELECT array_agg(id) AS ids, array_agg(cat_name) as names
         FROM children 
         `
     );
     const productsByCat = db("products").select('products.*', 'product_images.image_url')
         .leftJoin("product_images", "products.id", "product_images.product_id")
         .where((builder) => {
-            builder.whereIn("products.category_id", childCategories.rows[0].res)
+            builder.whereIn("products.category_id", childCategories.rows[0].ids)
         })
         .limit(perPage)
         .offset(offset)
         .orderByRaw(convertSortSelect(sortSelected))
     const total = db("products").select(db.raw('count(id) as total')).where((builder) => { 
-        builder.whereIn('category_id', childCategories.rows[0].res) 
+        builder.whereIn('category_id', childCategories.rows[0].ids) 
     });
-    return Promise.all([productsByCat, total]);
+    return Promise.all([productsByCat, childCategories.rows[0], total]);
 }
 
 // NOTE: Below query can be very slow on large datasets, but for my purposes works fine.

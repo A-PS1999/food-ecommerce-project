@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useCartStore } from '../../hooks/useCartStore';
 import FlipCard from '../../components/FlipCard/FlipCard';
 import Pagination from '../../components/Pagination/Pagination';
@@ -13,6 +13,7 @@ export default function ResultsPage({ BASE_URL }) {
     const [pageNum, setPageNum] = useState(1);
     const [categoryProds, setCategoryProds] = useState(null);
     const [paginationData, setPaginationData] = useState(null);
+    const [childCategories, setChildCategories] = useState(null);
     const [sortSelection, setSortSelection] = useState("name-asc");
     const { categoryName, categoryId } = useParams();
     const { callFetch, fetchState } = useFetch();
@@ -40,6 +41,7 @@ export default function ResultsPage({ BASE_URL }) {
         if (fetchState.data.categoryProds) {
             setCategoryProds(fetchState.data.categoryProds);
             setPaginationData(fetchState.data.paginationData);
+            setChildCategories(fetchState.data.childCategories);
         }
     }, [fetchState])
 
@@ -49,6 +51,19 @@ export default function ResultsPage({ BASE_URL }) {
                 {categoryName}
             </header>
             <div className='category-prods'>
+                {(categoryProds && categoryProds.length > 0) && (childCategories && childCategories.length > 0) ? (
+                    <div className="child-category-slider">
+                        <div className="child-category-slider__links">
+                            {childCategories.map((child) => {
+                                return (
+                                    <Link to={`/categories/${child.name}/${child.id}`} className="child-category-slider__links__link" key={child.id}>
+                                        {child.name}
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </div>
+                ) : null}
                 {categoryProds && categoryProds.length > 0 ? (
                     <section className='category-prods__sort'>
                         <label htmlFor="sort-options" className='category-prods__sort__label'>Sort by:</label>
