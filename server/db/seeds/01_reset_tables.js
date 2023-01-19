@@ -4,4 +4,5 @@ exports.seed = async function(knex) {
   await knex('products').del()
   await knex('product_categories').del()
   await knex('users').del()
+  await knex('reviews').del()
 };
