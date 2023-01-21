@@ -38,6 +38,30 @@
         }
     }
 
+    &__rating {
+        display: flex;
+        align-items: center;
+        grid-area: review-score;
+
+        &__text {
+            font-size: var.$default-font-size;
+            margin-right: 0.5rem;
+
+            &--count {
+                margin-left: 0.5rem;
+                font-size: var.$default-font-size;
+
+                @media only screen and (min-width: 769px) {
+                    font-size: 2.2rem;
+                }
+            }
+
+            @media only screen and (min-width: 769px) {
+                font-size: 2.2rem;
+            }
+        }
+    }
+
     &__stock {
         grid-area: stock;
         font-size: var.$default-font-size;
@@ -313,6 +337,7 @@
         grid-template-rows: min-content min-content min-content min-content min-content min-content min-content;
         grid-template-areas: "image product-name"
                             "image price"
+                            "image review-score"
                             "image stock"
                             "image basket"
                             "image description"

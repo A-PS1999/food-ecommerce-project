@@ -56,10 +56,12 @@ const addProduct = db => async (formData, files) => {
 }
 
 const getProduct = db => async (productId) => {
-    return db("products").select('products.*', 'product_images.image_url', 'product_categories.cat_name')
+    return db("products").select('products.*', 'product_images.image_url', 'product_categories.cat_name', db.raw('count(reviews.id) as review_count'))
         .leftJoin("product_images", "products.id", "product_images.product_id")
         .leftJoin("product_categories", "products.category_id", "product_categories.id")
+        .leftJoin("reviews", "products.id", "reviews.product_id")
         .where("products.id", productId)
+        .groupBy(["products.id", "product_images.image_url", "product_categories.cat_name"])
 }
 
 const getProductNameAndImage = db => async (productId) => {
@@ -86,13 +88,15 @@ const getProductsByCategory = db => async (categoryId, perPage, offset, sortSele
         FROM children 
         `
     );
-    const productsByCat = db("products").select('products.*', 'product_images.image_url')
+    const productsByCat = db("products").select('products.*', 'product_images.image_url', db.raw('count(reviews.id) as reviews_count'))
         .leftJoin("product_images", "products.id", "product_images.product_id")
+        .leftJoin("reviews", "products.id", "reviews.product_id")
         .where((builder) => {
             builder.whereIn("products.category_id", childCategories.rows[0].ids)
         })
         .limit(perPage)
         .offset(offset)
+        .groupBy(['products.id', 'product_images.image_url'])
         .orderByRaw(convertSortSelect(sortSelected))
     const total = db("products").select(db.raw('count(id) as total')).where((builder) => { 
         builder.whereIn('category_id', childCategories.rows[0].ids) 

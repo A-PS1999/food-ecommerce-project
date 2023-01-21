@@ -4,6 +4,7 @@ import { AuthContext } from "../../utils/AuthContextProvider.jsx";
 import useFetch from "../../hooks/useFetch.js";
 import { useCartStore } from "../../hooks/useCartStore.js";
 import { useToastStore } from "../../hooks/useToastStore.js";
+import StarRating from "../../components/StarRating/StarRating.jsx";
 import ReviewsComponent from "../../components/ReviewsComponent/ReviewsComponent.jsx";
 import Spinner from '../../components/Spinner/Spinner';
 import './ProductPage.scss';
@@ -98,6 +99,14 @@ export default function ProductPage({ BASE_URL }) {
                             <h1 className="product-page__product-name">{productDetails.prod_name}</h1>
                             <p className="product-page__stock">Current stock: {productDetails.stock}</p>
                             <p className="product-page__price">{productDetails.price}</p>
+                            <div className="product-page__rating">
+                                <p className="product-page__rating__text">Rating:</p>
+                                <StarRating isDisabled={true} ratingValue={productDetails.average_rating} />
+                                {productDetails.review_count === "1" ? 
+                                  <p className="product-page__rating__text--count">({productDetails.review_count} rating)</p> 
+                                : <p className="product-page__rating__text--count">({productDetails.review_count} ratings)</p>
+                                }
+                            </div>
                             <section className="product-page__basket-section">
                                 <div className="product-page__basket-section__quantity-group">
                                     <button type="button" className="product-page__basket-section__quantity-group__btn" disabled={quantity <= 1}

@@ -94,6 +94,20 @@
             }
         }
 
+        &__review-score {
+            display: none;
+
+            &__text {
+                margin-left: 0.5rem;
+                font-size: var.$default-font-size;
+            }
+
+            @media only screen and (min-width: 769px) {
+                display: flex;
+                align-items: center;
+            }
+        }
+
         &--front {
             grid-area: image;
             padding: 0;
