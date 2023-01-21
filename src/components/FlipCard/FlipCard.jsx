@@ -1,4 +1,5 @@
 import React from "react";
+import StarRating from "../StarRating/StarRating";
 import ReadMoreComponent from "../ReadMoreComponent/ReadMoreComponent";
 import './FlipCard.scss';
 
@@ -18,6 +19,10 @@ export default function FlipCard({ item, cartFunc }) {
                             {item.prod_name}
                         </div>
                         <b className="flipcard__side__text--front">{item.price}</b>
+                        <div className="flipcard__side__review-score">
+                            <StarRating ratingValue={item.avg_rating} isDisabled={true} size={30} />
+                            <p className="flipcard__side__review-score__text">({item.reviews_count})</p>
+                        </div>
                     </div>
                     <div className="flipcard__side flipcard__side--back">
                         <div className="flipcard__side__heading">

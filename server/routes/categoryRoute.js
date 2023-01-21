@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { convertPrice } = require('../serversideUtils/convertPrice');
 const { prepCategoryChildrenArray } = require('../serversideUtils/prepCategoryChildrenArray');
-const { CatQ } = require('../db/query-api');
+const { CatQ, RevQ } = require('../db/query-api');
 const { ProdQ } = require('../db/query-api');
 
 router.get("/api/categories/get-full-tree", async (req, res) => {
@@ -20,9 +20,18 @@ router.get('/api/categories/:catId/:pageNum/order=:sortSelected', async (req, re
     let paginationData = {};
     
     let [prodsByCat, children, total] = await ProdQ.getProductsByCategory(catId, 60, offset, sortSelected);
-    prodsByCat.forEach((product) => {
-        product.price = convertPrice(product.price);
-    });
+
+    for (let i=0; i < prodsByCat.length; i++) {
+        prodsByCat[i].price = convertPrice(prodsByCat[i].price);
+
+        let rating = await RevQ.getAverageProductReviewScore(prodsByCat[i].id);
+
+        if (rating.length > 0) {
+            prodsByCat[i].avg_rating = rating[0].avg_rating;
+        } else {
+            prodsByCat[i].avg_rating = 0.00;
+        }
+    }
     children = prepCategoryChildrenArray(children);
 
     try {

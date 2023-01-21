@@ -49,6 +49,10 @@ const getPaginatedProductReviews = db => async (productId, perPage, offset) => {
     return Promise.all([reviews, total]);
 }
 
+const getAverageProductReviewScore = db => async (productId) => {
+    return db('average_rating').select('avg_rating').where('id', productId);
+}
+
 module.exports = db => ({
     addNewReview: addNewReview(db),
     deleteReview: deleteReview(db),
@@ -56,4 +60,5 @@ module.exports = db => ({
     getPaginatedUserReviews: getPaginatedUserReviews(db),
     getProductReviewSample: getProductReviewSample(db),
     getPaginatedProductReviews: getPaginatedProductReviews(db),
+    getAverageProductReviewScore: getAverageProductReviewScore(db),
 })

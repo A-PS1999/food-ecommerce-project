@@ -6,15 +6,24 @@ const defaultPerPage = 15;
 
 router.get('/api/products/:id', async (req, res) => {
     const { id } = req.params;
-    await ProdQ.getProduct(id)
-        .then((product) => {
-            product[0].price = convertPrice(product[0].price);
-            return res.json({ product: product[0] })
-        })
-        .catch((error) => {
-            console.log(error)
-            res.status(400).send(`An error occured when fetching product ID ${id}`)
-        })
+
+    try {
+        let product = await ProdQ.getProduct(id);
+        const average_rating = await RevQ.getAverageProductReviewScore(id);
+
+        product[0].price = convertPrice(product[0].price);
+
+        if (average_rating.length > 0) {
+            product[0].average_rating = average_rating[0].avg_rating;
+        } else {
+            product[0].average_rating = 0.00;
+        }
+
+        res.json({ product: product[0] })
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(400);
+    }
 })
 
 router.get('/api/get-random-products/:num', async (req, res) => {
@@ -66,6 +75,19 @@ router.get('/api/get-product-reviews/:productId/:pageNum', async (req, res) => {
         paginationData.lastPage = Math.ceil(total.rows[0].total / defaultPerPage);
         paginationData.totalItems = Number(total.rows[0].total);
         res.json({ productDetails: productDetails[0], reviews, paginationData });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(400);
+    }
+})
+
+router.get('/api/product-review-avg/:productId', async (req, res) => {
+    const { productId } = req.params;
+
+    try {
+        let averageReviewScore = await RevQ.getAverageProductReviewScore(productId);
+
+        res.json({ avgRating: averageReviewScore });
     } catch (error) {
         console.log(error);
         res.sendStatus(400);
